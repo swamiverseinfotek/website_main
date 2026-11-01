@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swamiverse Infotek — Complex Problems. Thoughtfully Engineered Solutions.</title>
+  <meta name="description" content="We turn ambitious ideas and complex challenges into practical digital and engineering solutions across software, artificial intelligence, hardware, and emerging technologies.">
+  <meta name="theme-color" content="#07080A">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Swamiverse Infotek — Technology Partner">
+  <meta property="og:description" content="Complex problems. Thoughtfully engineered solutions across software, AI, hardware, and emerging tech.">
+  <meta property="og:type" content="website">
+
+  <!-- Typography: Plus Jakarta Sans & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js (Local Bundle with CDN Fallback) -->
+  <script src="three.min.js"></script>
+  <script>if (typeof THREE === 'undefined') { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>'); }</script>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=10.0">
+
+  <style id="custom-header-hero-styling">
+    /* 1. "Thoughtfully" in radiant goldenlish color */
+    .hero-headline .text-celestial-accent,
+    .text-celestial-accent {
+      display: inline-block !important;
+      color: #E5B869 !important;
+      background: linear-gradient(135deg, #FFF5CC 0%, #F5C065 25%, #E6B24D 50%, #D4AF37 75%, #FBBF24 100%) !important;
+      background-size: 200% auto !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      text-shadow: none !important;
+      filter: drop-shadow(0 2px 14px rgba(212, 175, 110, 0.6)) !important;
+      font-weight: 800 !important;
+      font-style: italic !important;
+    }
+
+    /* 2. "Let's Build ->" golden button */
+    #nav-cta-btn,
+    .header-actions #nav-cta-btn {
+      background: linear-gradient(135deg, #F8DF9E 0%, #D4AF6E 50%, #B58F48 100%) !important;
+      color: #07080A !important;
+      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: 0 4px 22px rgba(212, 175, 110, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+      font-weight: 700 !important;
+      padding: 0.6rem 1.4rem !important;
+      letter-spacing: -0.01em !important;
+      border-radius: 8px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+      transition: all 0.25s ease !important;
+      text-decoration: none !important;
+    }
+
+    #nav-cta-btn:hover,
+    .header-actions #nav-cta-btn:hover {
+      background: linear-gradient(135deg, #FFEAB5 0%, #E2BD7C 50%, #C49B50 100%) !important;
+      box-shadow: 0 6px 28px rgba(212, 175, 110, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      transform: translateY(-2px) !important;
+      color: #000000 !important;
+    }
+
+    /* 3. Navigation links bold and dark-white with refined Space Grotesk type */
+    .nav-links .nav-link,
+    .main-navigation .nav-link {
+      font-family: 'Space Grotesk', var(--font-sans), sans-serif !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      color: #E2E8F0 !important;
+      letter-spacing: 0.01em !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      position: relative !important;
+    }
+
+    .nav-links .nav-link:hover,
+    .nav-links .nav-link.active,
+    .main-navigation .nav-link:hover,
+    .main-navigation .nav-link.active {
+      color: #FFFFFF !important;
+      text-shadow: 0 0 14px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .nav-links .nav-link::after {
+      background: linear-gradient(90deg, #F5DCAB 0%, #D4AF6E 50%, #B58F48 100%) !important;
+      box-shadow: 0 0 10px rgba(212, 175, 110, 0.7) !important;
+    }
+
+    /* 4. Quick Architecture Formulator Chips */
+    .formulator-chip {
+      cursor: pointer !important;
+      user-select: none !important;
+      font-family: 'Space Grotesk', var(--font-mono), monospace !important;
+      font-size: 0.74rem !important;
+      font-weight: 600 !important;
+      padding: 0.38rem 0.8rem !important;
+      border-radius: 6px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      color: var(--text-celestial-slate) !important;
+      transition: all 0.2s ease !important;
+      outline: none !important;
+    }
+
+    .formulator-chip:hover {
+      border-color: rgba(212, 175, 110, 0.6) !important;
+      color: #FFFFFF !important;
+      background: rgba(212, 175, 110, 0.15) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    .formulator-chip.active {
+      background: linear-gradient(135deg, #F8DF9E 0%, #D4AF6E 50%, #B58F48 100%) !important;
+      color: #07080A !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+      box-shadow: 0 0 14px rgba(212, 175, 110, 0.55) !important;
+      font-weight: 700 !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* 5. All Important Titles in Bold Capital */
+    .hero-headline,
+    .hero-headline-center,
+    .section-title,
+    .about-headline,
+    .contact-headline,
+    .service-title,
+    .project-title,
+    .engagement-title,
+    .pillar-title,
+    .step-title,
+    .anchor-title,
+    .est-preview-title,
+    .modal-title,
+    .spec-section-title,
+    .success-title,
+    .footer-col-header {
+      font-weight: 800 !important;
+      text-transform: uppercase !important;
+      letter-spacing: -0.01em !important;
+    }
+  </style>
+</head>
+<body class="theme-champagne-platinum">
+
+  <!-- Cinematic Luxury Splash Screen (Quick 1.2s Intro with automatic voice greeting) -->
+  <div id="luxury-splash-screen" class="luxury-splash-overlay" aria-label="Loading Swamiverse Infotek">
+    <div class="splash-ambient-glow" aria-hidden="true"></div>
+    <div class="splash-content-block">
+      <div class="splash-emblem-wrap">
+        <img src="swami_just_logo-removebg-preview.png" alt="Swamiverse Infotek Emblem" class="splash-emblem-img">
+        <div class="splash-shimmer-sweep" aria-hidden="true"></div>
+      </div>
+      <div class="splash-brand-text">
+        <span class="splash-brand-name">SWAMIVERSE</span>
+        <span class="splash-brand-sub">INFOTEK</span>
+      </div>
+      <div class="splash-loader-line" aria-hidden="true">
+        <div class="splash-loader-progress"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      // Quick 1.2s splash screen dismiss (snappy, smooth fade)
+      var splash = document.getElementById('luxury-splash-screen');
+      if (splash) {
+        setTimeout(function() {
+          splash.classList.add('splash-hidden');
+          setTimeout(function() {
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 450);
+        }, 1200);
+      }
+    })();
+  </script>
+
+
+
+
+
+  <!-- Interactive Background Particle Constellation & Stardust Canvas -->
+  <canvas id="bg-constellation-canvas" class="bg-constellation" aria-hidden="true"></canvas>
+
+  <!-- Ethereal Nebula Atmospheric Glow Blobs -->
+  <div class="nebula-glow nebula-top-right" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-mid-left" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom-right" aria-hidden="true"></div>
+
+  <!-- Top Reading Progress Indicator (Cosmic Violet-to-Gold Gradient) -->
+  <div id="scroll-progress-bar" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="#home" class="brand-identity" aria-label="Swamiverse Infotek Home">
+        <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+        <span class="brand-text-stack">
+          <span class="brand-name-main">Swamiverse</span>
+          <span class="brand-name-sub">Infotek</span>
+        </span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#work" class="nav-link">Our Work</a></li>
+          <li><a href="#process" class="nav-link">Process</a></li>
+          <li><a href="#estimator" class="nav-link">Estimator</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#contact" class="btn btn-primary" id="nav-cta-btn">
+          Let's Build <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="#work" class="mobile-nav-link">Our Work</a></li>
+        <li><a href="#process" class="mobile-nav-link">Process</a></li>
+        <li><a href="#estimator" class="mobile-nav-link">Estimator</a></li>
+        <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
+        <li><a href="#about" class="mobile-nav-link">About</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <a href="#contact" class="btn btn-primary w-full mobile-drawer-cta">
+          Let's Build →
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- 2. HERO SECTION (PANORAMIC 3D MOSAIC STAGE) -->
+    <section class="hero-section hero-panoramic-stage" id="home">
+      <div class="container hero-center-container">
+        
+        <!-- Hero Text Header Block -->
+        <div class="hero-header-block text-center" data-scroll-3d>
+          
+          <div class="section-label-badge mx-auto">
+            <span class="label-dot"></span>
+            <span class="label-text">SWAMIVERSE INFOTEK · REAL-WORLD IMPACT</span>
+          </div>
+
+          <h1 class="hero-headline hero-headline-center">
+            COMPLEX PROBLEMS.<br>
+            <span class="text-celestial-accent">THOUGHTFULLY</span> ENGINEERED SOLUTIONS.
+          </h1>
+
+          <p class="hero-lead hero-lead-center mx-auto">
+            We turn ambitious ideas and complex challenges into practical digital and engineering solutions — across software, artificial intelligence, hardware, and emerging technologies.
+          </p>
+
+          <p class="hero-sublead hero-sublead-center mx-auto">
+            Whether you're a startup building something new or an established business solving a complex problem, we bring the right people, technology, and thinking together to make it happen.
+          </p>
+
+          <div class="hero-cta-group justify-center">
+            <a href="#contact" class="btn btn-primary" id="hero-primary-cta">
+              Tell Us Your Problem <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="#work" class="btn btn-secondary" id="hero-secondary-cta">
+              Explore Our Work <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Executive Quality Telemetry & Animated Proof-of-Work Grid -->
+        <div class="hero-telemetry-grid" data-scroll-3d>
+          
+          <div class="telemetry-card has-spotlight">
+            <div class="telemetry-top-row">
+              <div class="telemetry-icon-box">🛡️</div>
+              <span class="telemetry-badge"><span class="badge-dot"></span>HIGH SLA</span>
+            </div>
+            <div class="telemetry-val-wrap">
+              <span class="telemetry-val" data-target="99.98">99.98</span>
+              <span class="telemetry-unit">%</span>
+            </div>
+            <div class="telemetry-label">Production SLA Uptime</div>
+            <div class="telemetry-desc">Fault-tolerant architecture &amp; 24/7 continuous enterprise uptime</div>
+            <div class="kpi-sparkline-wrap">
+              <canvas class="kpi-sparkline-canvas" data-kpi="0"></canvas>
+            </div>
+          </div>
+
+          <div class="telemetry-card has-spotlight">
+            <div class="telemetry-top-row">
+              <div class="telemetry-icon-box">⚡</div>
+              <span class="telemetry-badge cyan"><span class="badge-dot"></span>REAL-TIME</span>
+            </div>
+            <div class="telemetry-val-wrap">
+              <span class="telemetry-unit">&lt;</span>
+              <span class="telemetry-val" data-target="85">85</span>
+              <span class="telemetry-unit">ms</span>
+            </div>
+            <div class="telemetry-label">Edge Query Latency</div>
+            <div class="telemetry-desc">Sub-second response across global multi-region edge nodes</div>
+            <div class="kpi-sparkline-wrap">
+              <canvas class="kpi-sparkline-canvas" data-kpi="1"></canvas>
+            </div>
+          </div>
+
+          <div class="telemetry-card has-spotlight">
+            <div class="telemetry-top-row">
+              <div class="telemetry-icon-box">🌐</div>
+              <span class="telemetry-badge gold"><span class="badge-dot"></span>FULL SPECTRUM</span>
+            </div>
+            <div class="telemetry-val-wrap">
+              <span class="telemetry-val" data-target="6">6</span>
+              <span class="telemetry-unit">+</span>
+            </div>
+            <div class="telemetry-label">Engineering Verticals</div>
+            <div class="telemetry-desc">AI, Embedded IoT, Cloud Infrastructure &amp; Custom Systems</div>
+            <div class="kpi-sparkline-wrap">
+              <canvas class="kpi-sparkline-canvas" data-kpi="2"></canvas>
+            </div>
+          </div>
+
+          <div class="telemetry-card has-spotlight">
+            <div class="telemetry-top-row">
+              <div class="telemetry-icon-box">💎</div>
+              <span class="telemetry-badge"><span class="badge-dot"></span>CLEAN CODE</span>
+            </div>
+            <div class="telemetry-val-wrap">
+              <span class="telemetry-val" data-target="100">100</span>
+              <span class="telemetry-unit">%</span>
+            </div>
+            <div class="telemetry-label">Custom Engineered Code</div>
+            <div class="telemetry-desc">Zero bloated boilerplate, built for performance and longevity</div>
+            <div class="kpi-sparkline-wrap">
+              <canvas class="kpi-sparkline-canvas" data-kpi="3"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Trust Indicators Strip -->
+        <div class="hero-trust-indicators hero-trust-center justify-center" data-scroll-3d>
+          <div class="trust-indicator-item">
+            <span class="indicator-icon">✦</span>
+            <span class="indicator-label">Multidisciplinary Engineering</span>
+          </div>
+          <div class="trust-indicator-item">
+            <span class="indicator-icon">✦</span>
+            <span class="indicator-label">Software &amp; Hardware Solutions</span>
+          </div>
+          <div class="trust-indicator-item">
+            <span class="indicator-icon">✦</span>
+            <span class="indicator-label">Project-Based &amp; Long-Term Partnerships</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. TRUST AND AUDIENCE STRIP (EXECUTIVE ECOSYSTEM PAVILION - EQUAL 2 LINES) -->
+    <section class="audience-strip-section" aria-label="Target Audience">
+      <div class="container">
+        <div class="audience-strip-card has-spotlight">
+          
+          <!-- Top Executive Header Row -->
+          <div class="audience-header-bar">
+            <div class="audience-anchor-block">
+              <div class="anchor-badge-gem" aria-hidden="true">
+                <span class="gem-sparkle">✦</span>
+              </div>
+              <div class="anchor-text-wrap">
+                <span class="anchor-eyebrow">PARTNERSHIP ECOSYSTEM</span>
+                <h3 class="anchor-title">BUILT FOR PROBLEM SOLVERS</h3>
+              </div>
+            </div>
+
+            <div class="audience-meta-pill">
+              <span class="meta-dot" aria-hidden="true"></span>
+              <span>6 TAILORED COLLABORATION TIERS</span>
+            </div>
+          </div>
+
+          <!-- Horizontal Subtle Glass Bevel Divider -->
+          <div class="audience-horizontal-divider" aria-hidden="true"></div>
+
+          <!-- Symmetrical 2-Line Grid: Equal 3 on Line 1, Equal 3 on Line 2 -->
+          <div class="audience-capsules-grid-equal">
+            
+            <!-- LINE 1: 3 Equal Capsules -->
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">🚀</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">Startups &amp; Founders</span>
+                <span class="capsule-subtitle">0-to-1 Product Incubation</span>
+              </div>
+            </div>
+
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">⚡</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">High-Growth Scaleups</span>
+                <span class="capsule-subtitle">Rapid Architecture Scaling</span>
+              </div>
+            </div>
+
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">⚙️</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">Small &amp; Medium Businesses</span>
+                <span class="capsule-subtitle">Modernize &amp; Automate</span>
+              </div>
+            </div>
+
+            <!-- LINE 2: 3 Equal Capsules -->
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">🛡️</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">Enterprises &amp; Corporations</span>
+                <span class="capsule-subtitle">Mission-Critical Security &amp; SLA</span>
+              </div>
+            </div>
+
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">🧠</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">Research &amp; DeepTech Teams</span>
+                <span class="capsule-subtitle">AI Modeling &amp; Frontier R&amp;D</span>
+              </div>
+            </div>
+
+            <div class="audience-capsule has-spotlight">
+              <div class="capsule-icon-jewel">
+                <span class="capsule-emoji">🌐</span>
+              </div>
+              <div class="capsule-content">
+                <span class="capsule-title">Global Organizations</span>
+                <span class="capsule-subtitle">Multi-Region Distributed Systems</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SERVICES SECTION -->
+    <section class="services-section" id="services">
+      <div class="container">
+        
+        <div class="section-header-editorial">
+          <div class="section-label-badge">
+            <span class="label-dot"></span>
+            <span class="label-text">WHAT WE BUILD</span>
+          </div>
+          <div class="header-columns">
+            <h2 class="section-title">
+              A FULL SPECTRUM OF TECHNOLOGY SOLUTIONS
+            </h2>
+            <p class="section-intro">
+              From web and mobile applications to AI, cloud, embedded systems, and beyond — we bring your ideas to life with the right technology, the right team, and the right approach.
+            </p>
+          </div>
+        </div>
+
+        <div class="services-bento-grid">
+          
+          <!-- 01. AI & Machine Learning Systems -->
+          <article class="bento-card bento-span-7 bento-flagship-ai service-card" data-service-key="ai">
+            <div class="service-top-row">
+              <span class="bento-badge-live">
+                <span class="live-pulse-dot"></span>
+                <span>Flagship Intelligence · Sub-50ms Inference</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon accent-violet">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">01</span>
+                <h3 class="service-title">AI &amp; MACHINE LEARNING SYSTEMS</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Enterprise predictive models, autonomous LLM agent pipelines, real-time computer vision, and neural anomaly detectors engineered for mission-critical reliability.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                Enterprise Multi-Agent RAG Assistant parsing 250k+ technical PDFs with hybrid semantic search and <span class="service-example-metric">&lt;45ms</span> vector retrieval.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill highlight">PyTorch</span>
+                <span class="tech-micro-pill highlight">LangChain / LlamaIndex</span>
+                <span class="tech-micro-pill">Hugging Face</span>
+                <span class="tech-micro-pill">vLLM / Triton</span>
+                <span class="tech-micro-pill">Pinecone / Qdrant</span>
+                <span class="tech-micro-pill">MLflow</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 02. Web Platforms & Modern UI -->
+          <article class="bento-card bento-span-5 service-card" data-service-key="web">
+            <div class="service-top-row">
+              <span class="bento-badge-live">
+                <span class="live-pulse-dot"></span>
+                <span>99/100 Core Web Vitals</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">02</span>
+                <h3 class="service-title">WEB PLATFORMS &amp; MODERN UI</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Scalable, high-performance web applications and enterprise portals engineered for instant loading, robust state management, and high conversion.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label emerald">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                FinTech trading analytics portal serving 50k+ daily users with sub-second page switches and <span class="service-example-metric">99.8%</span> Core Web Vitals score.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill highlight">React / Next.js 14</span>
+                <span class="tech-micro-pill highlight">TypeScript</span>
+                <span class="tech-micro-pill">Node.js / Express</span>
+                <span class="tech-micro-pill">Tailwind CSS</span>
+                <span class="tech-micro-pill">GraphQL / REST</span>
+                <span class="tech-micro-pill">Playwright / Vite</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 03. Mobile App Development -->
+          <article class="bento-card bento-span-5 service-card" data-service-key="mobile">
+            <div class="service-top-row">
+              <span class="bento-badge-live">
+                <span class="live-pulse-dot"></span>
+                <span>60 FPS Fluid UI · Offline Sync</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">03</span>
+                <h3 class="service-title">MOBILE APP DEVELOPMENT</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Native and cross-platform iOS and Android applications with robust offline caching, biometric security, and instantaneous push notifications.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                Healthcare fieldwork tablet app enabling doctors to record diagnostics offline with zero data loss and automated <span class="service-example-metric">CRDT sync</span>.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill highlight">Flutter</span>
+                <span class="tech-micro-pill highlight">React Native</span>
+                <span class="tech-micro-pill">Kotlin / Swift</span>
+                <span class="tech-micro-pill">SQLite / Realm</span>
+                <span class="tech-micro-pill">Firebase Cloud Messaging</span>
+                <span class="tech-micro-pill">Fastlane CI</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 04. Embedded Systems & Hardware IoT -->
+          <article class="bento-card bento-span-7 bento-flagship-iot service-card" data-service-key="embedded">
+            <div class="service-top-row">
+              <span class="bento-badge-live gold">
+                <span class="live-pulse-dot gold"></span>
+                <span>Deterministic RTOS · Ultra-Low Power</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon accent-gold">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">04</span>
+                <h3 class="service-title">EMBEDDED SYSTEMS &amp; HARDWARE</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Custom PCB layouts, deterministic firmware, sensor fusion pipelines, and TinyML intelligence deployed on edge microcontrollers for harsh industrial operating environments.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label gold">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                Solar-powered agricultural sensor probe with LoRaWAN telemetry operating unattended on battery for <span class="service-example-metric">3+ years</span>.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill gold">Embedded C / C++</span>
+                <span class="tech-micro-pill gold">STM32 / ESP32</span>
+                <span class="tech-micro-pill">FreeRTOS / Zephyr</span>
+                <span class="tech-micro-pill">KiCad PCB</span>
+                <span class="tech-micro-pill">LoRaWAN &amp; BLE 5</span>
+                <span class="tech-micro-pill">Edge Impulse / TinyML</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 05. Cloud Infrastructure & DevOps -->
+          <article class="bento-card bento-span-6 service-card" data-service-key="cloud">
+            <div class="service-top-row">
+              <span class="bento-badge-live">
+                <span class="live-pulse-dot"></span>
+                <span>Zero-Downtime Multi-Region</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">05</span>
+                <h3 class="service-title">CLOUD INFRASTRUCTURE &amp; DEVOPS</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Automated deployment orchestration, Kubernetes cluster management, Infrastructure-as-Code, and distributed telemetry observability for maximum resilience.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                Multi-region Kubernetes migration with automated blue-green rollouts yielding <span class="service-example-metric">99.99% uptime</span> and 40% cloud cost reduction.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill highlight">AWS / GCP / Azure</span>
+                <span class="tech-micro-pill highlight">Kubernetes (K8s)</span>
+                <span class="tech-micro-pill">Terraform IaC</span>
+                <span class="tech-micro-pill">Docker</span>
+                <span class="tech-micro-pill">GitHub Actions / ArgoCD</span>
+                <span class="tech-micro-pill">Prometheus &amp; Grafana</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 06. Robotics, IoT & Emerging Tech -->
+          <article class="bento-card bento-span-6 service-card" data-service-key="robotics">
+            <div class="service-top-row">
+              <span class="bento-badge-live gold">
+                <span class="live-pulse-dot gold"></span>
+                <span>Spatial Kinematics · IoT Mesh</span>
+              </span>
+              <span class="service-inspect-tag">Inspect Architecture ↗</span>
+            </div>
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+              </div>
+              <div class="service-title-group">
+                <span class="service-number">06</span>
+                <h3 class="service-title">ROBOTICS, IOT &amp; EMERGING TECH</h3>
+              </div>
+            </div>
+            <p class="service-body">
+              Industrial automation algorithms, ROS 2 integration, connected sensory fleets, and cutting-edge physical-digital interfaces that turn ambitious engineering ideas into reality.
+            </p>
+
+            <div class="service-example-box">
+              <span class="service-example-label gold">
+                <span>✦</span> Real-World Example
+              </span>
+              <span class="service-example-text">
+                Autonomous mobile robot (AMR) warehouse navigation fleet running SLAM navigation and <span class="service-example-metric">&lt;2cm accuracy</span> LiDAR obstacle avoidance.
+              </span>
+            </div>
+
+            <div class="service-card-footer">
+              <span class="service-footer-label">Technologies &amp; Tools</span>
+              <div class="tech-pills-row">
+                <span class="tech-micro-pill gold">ROS 2 Humble</span>
+                <span class="tech-micro-pill gold">Python / C++</span>
+                <span class="tech-micro-pill">OpenCV / DepthAI</span>
+                <span class="tech-micro-pill">MQTT / Zenoh</span>
+                <span class="tech-micro-pill">Gazebo Simulator</span>
+                <span class="tech-micro-pill">Nav2 Path Planning</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="services-footer-action">
+          <a href="#contact" class="btn btn-secondary">
+            Explore All Services <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. PROBLEM-SOLVING PROCESS SECTION -->
+    <section class="process-section" id="process">
+      <div class="container">
+        
+        <div class="section-header-editorial">
+          <div class="section-label-badge">
+            <span class="label-dot"></span>
+            <span class="label-text">HOW WE WORK</span>
+          </div>
+          <div class="header-columns">
+            <h2 class="section-title">
+              FROM YOUR CHALLENGE TO A REAL-WORLD SOLUTION
+            </h2>
+            <p class="section-intro">
+              Every successful solution starts with understanding the problem. We follow a collaborative process that keeps you involved at every stage.
+            </p>
+          </div>
+        </div>
+
+        <!-- Interactive Process Progress Track -->
+        <div class="process-track-indicator" aria-hidden="true">
+          <div class="track-line">
+            <div class="track-progress-fill" id="process-progress-fill"></div>
+          </div>
+          <div class="track-nodes">
+            <span class="track-node active" data-step="1">01</span>
+            <span class="track-node" data-step="2">02</span>
+            <span class="track-node" data-step="3">03</span>
+            <span class="track-node" data-step="4">04</span>
+          </div>
+        </div>
+
+        <div class="process-steps-grid">
+          
+          <div class="process-step-card active" data-step-index="1" role="button" tabindex="0" aria-label="Step 1: Listen and Frame">
+            <div class="step-badge">
+              <span class="step-num">01. UNDERSTAND</span>
+              <span class="step-status-tag">ACTIVE</span>
+            </div>
+            <h3 class="step-title">LISTEN &amp; FRAME</h3>
+            <p class="step-desc">
+              We listen to your challenges, identify the root problem, understand your goals, and define what success looks like.
+            </p>
+            <div class="step-deliverable">
+              <span class="deliv-tag">Deliverable:</span>
+              <span class="deliv-text">Root-Cause Analysis &amp; Success Metrics</span>
+            </div>
+          </div>
+
+          <div class="process-step-card" data-step-index="2" role="button" tabindex="0" aria-label="Step 2: Evaluate and Plan">
+            <div class="step-badge">
+              <span class="step-num">02. DESIGN</span>
+              <span class="step-status-tag">PENDING</span>
+            </div>
+            <h3 class="step-title">EVALUATE &amp; PLAN</h3>
+            <p class="step-desc">
+              We evaluate possible approaches, select suitable technologies, and develop a practical solution plan.
+            </p>
+            <div class="step-deliverable">
+              <span class="deliv-tag">Deliverable:</span>
+              <span class="deliv-text">Technical Blueprint &amp; Architecture Roadmap</span>
+            </div>
+          </div>
+
+          <div class="process-step-card" data-step-index="3" role="button" tabindex="0" aria-label="Step 3: Engineer and Validate">
+            <div class="step-badge">
+              <span class="step-num">03. BUILD &amp; TEST</span>
+              <span class="step-status-tag">PENDING</span>
+            </div>
+            <h3 class="step-title">ENGINEER &amp; VALIDATE</h3>
+            <p class="step-desc">
+              Our team develops, integrates, tests, and refines the solution to ensure it meets the agreed requirements.
+            </p>
+            <div class="step-deliverable">
+              <span class="deliv-tag">Deliverable:</span>
+              <span class="deliv-text">Production-Grade Build &amp; Validation Suite</span>
+            </div>
+          </div>
+
+          <div class="process-step-card" data-step-index="4" role="button" tabindex="0" aria-label="Step 4: Launch and Evolve">
+            <div class="step-badge">
+              <span class="step-num">04. DEPLOY &amp; IMPROVE</span>
+              <span class="step-status-tag">PENDING</span>
+            </div>
+            <h3 class="step-title">LAUNCH &amp; EVOLVE</h3>
+            <p class="step-desc">
+              We help launch the solution, monitor its performance, and support continuous improvement as your needs evolve.
+            </p>
+            <div class="step-deliverable">
+              <span class="deliv-tag">Deliverable:</span>
+              <span class="deliv-text">Smooth Rollout, Telemetry &amp; Ongoing Evolution</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="process-footer-action">
+          <a href="#contact" class="btn btn-secondary">
+            Discover Our Process <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. FEATURED PROJECTS SECTION -->
+    <section class="work-section" id="work">
+      <div class="container">
+        
+        <div class="section-header-editorial">
+          <div class="section-label-badge">
+            <span class="label-dot"></span>
+            <span class="label-text">FEATURED WORK</span>
+          </div>
+          <div class="header-columns">
+            <h2 class="section-title">
+              REAL PROJECTS. REAL IMPACT.
+            </h2>
+            <p class="section-intro">
+              A selection of engineering and technology projects built to address practical challenges.
+            </p>
+          </div>
+        </div>
+
+        <!-- Work Filter Tabs -->
+        <div class="work-filter-bar">
+          <button type="button" class="work-filter-btn active" data-filter="all">All Solutions (4)</button>
+          <button type="button" class="work-filter-btn" data-filter="ai">AI &amp; Analytics</button>
+          <button type="button" class="work-filter-btn" data-filter="mobile">Mobile Systems</button>
+          <button type="button" class="work-filter-btn" data-filter="iot">IoT &amp; Hardware</button>
+          <button type="button" class="work-filter-btn" data-filter="web">Enterprise Web</button>
+        </div>
+
+        <div class="projects-grid">
+          
+          <!-- Project 1: CampusPrep (AI & Analytics) -->
+          <article class="project-card" data-project-id="campusprep" data-category="ai">
+            <div class="project-card-header">
+              <div class="project-category-badge">Category: AI &amp; Analytics</div>
+              <span class="project-view-badge">Inspect Case Study ↗</span>
+            </div>
+            <span class="project-impact-badge">✦ Impact: 100% Voice AI Interviews · Adaptive MCP Routing</span>
+            <h3 class="project-title">CAMPUSPREP — AI VOICE INTERVIEW PLATFORM</h3>
+            <p class="project-summary">
+              An intelligent voice-driven mock interview simulation and placement preparation platform featuring real-time speech dialogue, resume-adaptive difficulty routing via an MCP agent harness, and verified alumni review.
+            </p>
+            <div class="project-action-wrap">
+              <a href="campusprep.html" class="btn btn-secondary w-full project-detail-btn" onclick="event.stopPropagation();">
+                Check Out in Detail <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 2: MyClaim Mobile (Flutter Mobile Suite) -->
+          <article class="project-card" data-project-id="myclaim-mobile" data-category="mobile">
+            <div class="project-card-header">
+              <div class="project-category-badge">Category: FinTech Mobile</div>
+              <span class="project-view-badge">Inspect Case Study ↗</span>
+            </div>
+            <span class="project-impact-badge">✦ Impact: &lt;500ms Biometric Unlock · Dual-Shell UI · Offline-Tolerant</span>
+            <h3 class="project-title">MYCLAIM MOBILE — CROSS-PLATFORM FINANCIAL RECOVERY SUITE</h3>
+            <p class="project-summary">
+              An enterprise-grade Flutter mobile application engineered for claimants and financial advisors that digitizes IEPF share/dividend recovery, Pre-IPO allocations, and channel partner networks — secured by device-native biometrics, interactive heirship mapping, and sleep-resilient API pipelines.
+            </p>
+            <div class="project-action-wrap">
+              <a href="myclaim-mobile.html" class="btn btn-secondary w-full project-detail-btn" onclick="event.stopPropagation();">
+                Check Out in Detail <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 3: ABHEDYA (IoT & Hardware) -->
+          <article class="project-card" data-project-id="abhedya" data-category="iot">
+            <div class="project-card-header">
+              <div class="project-category-badge">Category: IoT &amp; Hardware</div>
+              <span class="project-view-badge">Inspect Case Study ↗</span>
+            </div>
+            <span class="project-impact-badge">✦ Impact: Aircraft-Inspired Blackbox · Continuous Event Recording</span>
+            <h3 class="project-title">ABHEDYA — INTELLIGENT BLACKBOX FOR COMMERCIAL VEHICLES</h3>
+            <p class="project-summary">
+              An intelligent IoT-based hardware system engineered for commercial vehicles to improve transportation safety, cargo security, and journey accountability through continuous telemetry monitoring and digital event recording.
+            </p>
+            <div class="project-action-wrap">
+              <a href="abhedya.html" class="btn btn-secondary w-full project-detail-btn" onclick="event.stopPropagation();">
+                Check Out in Detail <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 4: MyClaim (FinTech & Enterprise Platform) -->
+          <article class="project-card" data-project-id="myclaim" data-category="web">
+            <div class="project-card-header">
+              <div class="project-category-badge">Category: FinTech &amp; Web Platform</div>
+              <span class="project-view-badge">Inspect Case Study ↗</span>
+            </div>
+            <span class="project-impact-badge">✦ Impact: &lt;100ms Real-Time Sync · 8-Tier RBAC · Client-Side OCR</span>
+            <h3 class="project-title">MYCLAIM — ENTERPRISE FINANCIAL RECOVERY &amp; CLAIM MANAGEMENT PORTAL</h3>
+            <p class="project-summary">
+              An end-to-end, multi-tier claims management and investor recovery portal that unifies IEPF share/dividend retrieval, Pre-IPO allocations, wealth portfolios, and insurance claims into a single digitized workflow — powered by real-time WebSockets, in-browser OCR verification, and a CrewAI multi-agent workforce.
+            </p>
+            <div class="project-action-wrap">
+              <a href="myclaim.html" class="btn btn-secondary w-full project-detail-btn" onclick="event.stopPropagation();">
+                Check Out in Detail <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="work-footer-action">
+          <a href="#contact" class="btn btn-secondary">
+            View Our Projects <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. ENGAGEMENT MODELS SECTION -->
+    <section class="engagement-section" id="engagement">
+      <div class="container">
+        
+        <div class="section-header-editorial">
+          <div class="section-label-badge">
+            <span class="label-dot"></span>
+            <span class="label-text">ENGAGEMENT MODELS</span>
+          </div>
+          <div class="header-columns">
+            <h2 class="section-title">
+              WORK WITH US, YOUR WAY
+            </h2>
+            <p class="section-intro">
+              Whether you have a defined project or need a long-term technology partner, we offer flexible engagement models tailored to your goals.
+            </p>
+          </div>
+        </div>
+
+        <div class="engagement-grid">
+          
+          <!-- Model 1 -->
+          <div class="engagement-card">
+            <div class="engagement-tag">MODEL 01</div>
+            <h3 class="engagement-title">PROJECT-BASED DELIVERY</h3>
+            <p class="engagement-desc">
+              Have a specific problem or idea? We work with you from requirements and planning through development, testing, and delivery.
+            </p>
+            <div class="engagement-fit-box">
+              <span class="fit-label">Ideal for:</span>
+              <p class="fit-text">New products, MVPs, business applications, prototypes, and targeted technical challenges.</p>
+            </div>
+            <a href="#contact" class="btn btn-primary w-full model-select-btn" data-preference="Project-based">
+              Discuss Your Project <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <!-- Model 2 -->
+          <div class="engagement-card featured-engagement">
+            <div class="engagement-tag accent-violet-text">MODEL 02 · ONGOING STRATEGY</div>
+            <h3 class="engagement-title">LONG-TERM TECHNOLOGY PARTNERSHIP</h3>
+            <p class="engagement-desc">
+              Need an ongoing engineering team? We collaborate with your business to develop, maintain, scale, and continuously improve your technology.
+            </p>
+            <div class="engagement-fit-box">
+              <span class="fit-label">Ideal for:</span>
+              <p class="fit-text">Growing startups, established businesses, ongoing product development, and technology modernization.</p>
+            </div>
+            <a href="#contact" class="btn btn-violet w-full model-select-btn" data-preference="Long-term partnership">
+              Explore a Partnership <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 8. WHY SWAMIVERSE INFOTEK? SECTION -->
+    <section class="about-section" id="about">
+      <div class="container">
+        
+        <div class="about-layout">
+          
+          <div class="about-sticky-intro">
+            <div class="section-label-badge">
+              <span class="label-dot"></span>
+              <span class="label-text">WHY WORK WITH US</span>
+            </div>
+            <h2 class="about-headline">
+              THE RIGHT MINDS.<br>
+              THE RIGHT TECHNOLOGY.<br>
+              <span class="text-celestial-accent">ONE SHARED GOAL.</span>
+            </h2>
+            <p class="about-lead">
+              Swamiverse Infotek brings together the multidisciplinary engineering capabilities required to solve your specific technical and business challenges.
+            </p>
+            <div class="about-highlight-pill">
+              <span class="pill-dot"></span>
+              <span>Tailored execution without technology bias</span>
+            </div>
+          </div>
+
+          <div class="about-pillars-list" id="about-pillars-list">
+            <div class="pillars-spine-track" aria-hidden="true">
+              <div class="pillars-spine-progress" id="pillars-spine-progress"></div>
+            </div>
+            
+            <div class="pillar-card" data-step="1">
+              <span class="pillar-step-node" aria-hidden="true"></span>
+              <div class="pillar-header">
+                <span class="pillar-num">01</span>
+                <h3 class="pillar-title">PROBLEM-FIRST THINKING</h3>
+              </div>
+              <p class="pillar-desc">
+                We start by understanding your actual challenge rather than forcing a predefined technology onto it.
+              </p>
+            </div>
+
+            <div class="pillar-card" data-step="2">
+              <span class="pillar-step-node" aria-hidden="true"></span>
+              <div class="pillar-header">
+                <span class="pillar-num">02</span>
+                <h3 class="pillar-title">MULTIDISCIPLINARY EXPERTISE</h3>
+              </div>
+              <p class="pillar-desc">
+                We bring together software, AI, data, hardware, embedded systems, and automation capabilities.
+              </p>
+            </div>
+
+            <div class="pillar-card" data-step="3">
+              <span class="pillar-step-node" aria-hidden="true"></span>
+              <div class="pillar-header">
+                <span class="pillar-num">03</span>
+                <h3 class="pillar-title">SOLUTIONS BUILT AROUND YOU</h3>
+              </div>
+              <p class="pillar-desc">
+                We adapt our approach to your requirements, constraints, business goals, and users.
+              </p>
+            </div>
+
+            <div class="pillar-card" data-step="4">
+              <span class="pillar-step-node" aria-hidden="true"></span>
+              <div class="pillar-header">
+                <span class="pillar-num">04</span>
+                <h3 class="pillar-title">COLLABORATION BEYOND DELIVERY</h3>
+              </div>
+              <p class="pillar-desc">
+                We aim to build lasting relationships, with support and continued development when your business needs it.
+              </p>
+            </div>
+
+            <div class="pillar-card" data-step="5">
+              <span class="pillar-step-node" aria-hidden="true"></span>
+              <div class="pillar-header">
+                <span class="pillar-num">05</span>
+                <h3 class="pillar-title">PRACTICAL ENGINEERING</h3>
+              </div>
+              <p class="pillar-desc">
+                We focus on solutions that are useful, maintainable, scalable, and designed for real-world use.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+    <!-- 8. INTERACTIVE PROJECT SCOPE & ARCHITECTURE ESTIMATOR -->
+    <section class="estimator-section" id="estimator">
+      <div class="container">
+        
+        <div class="section-header-editorial">
+          <div class="section-label-badge">
+            <span class="label-dot"></span>
+            <span class="label-text">INTERACTIVE BLUEPRINT CONFIGURATOR</span>
+          </div>
+          <div class="header-columns">
+            <h2 class="section-title">
+              FORMULATE YOUR TECHNICAL ARCHITECTURE
+            </h2>
+            <p class="section-intro">
+              Select your solution domain, scale, and operational requirements to generate an interactive custom system architecture blueprint, recommended tech stack, and estimated development horizon.
+            </p>
+          </div>
+        </div>
+
+        <div class="estimator-grid">
+          
+          <!-- Estimator Inputs -->
+          <div class="estimator-config-card">
+            
+            <!-- Step 1: Solution Domain -->
+            <div class="estimator-step-block">
+              <span class="estimator-step-label">Step 1: Primary Solution Domain</span>
+              <div class="estimator-choices" id="est-domain-choices">
+                <button type="button" class="estimator-chip active" data-domain="ai">🧠 AI &amp; Machine Learning</button>
+                <button type="button" class="estimator-chip" data-domain="web">🌐 Web Platform &amp; API</button>
+                <button type="button" class="estimator-chip" data-domain="mobile">📱 Mobile Application</button>
+                <button type="button" class="estimator-chip" data-domain="embedded">⚡ Embedded Systems / IoT</button>
+                <button type="button" class="estimator-chip" data-domain="cloud">☁️ Cloud &amp; DevOps</button>
+                <button type="button" class="estimator-chip" data-domain="robotics">🤖 Robotics &amp; Automation</button>
+              </div>
+            </div>
+
+            <!-- Step 2: System Scale -->
+            <div class="estimator-step-block">
+              <span class="estimator-step-label">Step 2: Deployment Horizon &amp; Scale</span>
+              <div class="estimator-choices" id="est-scale-choices">
+                <button type="button" class="estimator-chip active" data-scale="mvp">🚀 MVP Prototype Build</button>
+                <button type="button" class="estimator-chip" data-scale="growth">📈 Scaled Production System</button>
+                <button type="button" class="estimator-chip" data-scale="enterprise">🏢 High-Availability Enterprise</button>
+              </div>
+            </div>
+
+            <!-- Step 3: Architecture Capabilities -->
+            <div class="estimator-step-block">
+              <span class="estimator-step-label">Step 3: Core Architectural Capabilities (Multi-select)</span>
+              <div class="estimator-choices" id="est-capabilities-choices">
+                <button type="button" class="estimator-chip active" data-cap="realtime">⚡ Real-Time WebSockets</button>
+                <button type="button" class="estimator-chip active" data-cap="edge">🔥 Edge AI / Sub-50ms Inference</button>
+                <button type="button" class="estimator-chip" data-cap="offline">💾 Offline-First Synchronization</button>
+                <button type="button" class="estimator-chip" data-cap="multiregion">🌐 Multi-Region Auto-Scaling</button>
+                <button type="button" class="estimator-chip" data-cap="security">🛡️ SOC2 / Zero-Trust Security</button>
+                <button type="button" class="estimator-chip active" data-cap="cicd">🔄 Automated CI/CD Mesh</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Estimator Live Dynamic Blueprint Result -->
+          <div class="estimator-blueprint-card">
+            <div>
+              <div class="blueprint-header">
+                <span class="blueprint-badge">Recommended Engineering Blueprint</span>
+                <h3 class="blueprint-title" id="est-blueprint-title">DISTRIBUTED NEURAL INFERENCE &amp; REAL-TIME STREAMING MESH</h3>
+              </div>
+
+              <div class="blueprint-details">
+                <div class="blueprint-metric-row">
+                  <div class="blueprint-metric-item">
+                    <span class="metric-meta">Estimated Horizon</span>
+                    <span class="metric-value" id="est-blueprint-timeline">6 – 8 Weeks</span>
+                  </div>
+                  <div class="blueprint-metric-item">
+                    <span class="metric-meta">Reliability Target</span>
+                    <span class="metric-value" id="est-blueprint-sla">99.98% SLA</span>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="metric-meta" style="display:block; margin-bottom: 0.45rem;">Recommended Production Stack</span>
+                  <div class="blueprint-stack-list" id="est-blueprint-stack">
+                    <span class="spec-pill">Python FastAPI</span>
+                    <span class="spec-pill">PyTorch / TensorRT</span>
+                    <span class="spec-pill">Apache Kafka</span>
+                    <span class="spec-pill">Redis Cache</span>
+                    <span class="spec-pill">Next.js 14 UI</span>
+                    <span class="spec-pill">Docker / K8s</span>
+                  </div>
+                </div>
+
+                <div>
+                  <span class="metric-meta" style="display:block; margin-bottom: 0.45rem;">Key Architecture Deliverables</span>
+                  <ul class="blueprint-deliverables-list" id="est-blueprint-deliverables">
+                    <li>Containerized inference serving engine with dynamic batching</li>
+                    <li>Low-latency bidirectional WebSocket telemetry socket</li>
+                    <li>Production CI/CD deployment pipeline with automated test matrix</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="blueprint-actions">
+              <button type="button" class="btn btn-primary w-full" id="est-apply-blueprint-btn">
+                Apply Blueprint to Enquiry <span class="arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+    <!-- 9. EXECUTIVE ARCHITECTURE FAQ SECTION -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        
+        <div class="section-header-editorial text-center">
+          <div class="section-label-badge mx-auto">
+            <span class="label-dot"></span>
+            <span class="label-text">TRANSPARENCY &amp; ENGAGEMENT</span>
+          </div>
+          <h2 class="section-title">
+            FREQUENTLY ASKED TECHNICAL QUESTIONS
+          </h2>
+          <p class="section-intro mx-auto" style="max-width: 680px; text-align: center;">
+            Clear, upfront answers about our engineering process, intellectual property rights, SLAs, and multidisciplinary capabilities.
+          </p>
+        </div>
+
+        <div class="faq-accordion">
+          
+          <div class="faq-item open">
+            <button type="button" class="faq-question-btn">
+              <span>Who owns the intellectual property and codebase?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>You retain 100% full ownership of all source code, architecture documentation, trained model weights, database schemas, and digital assets we build for you. Deliverables are transferred to your repositories with zero proprietary vendor lock-in.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span>Can we begin with a rapid prototype or MVP before full-scale build?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes. Many of our strongest long-term partnerships began as focused 4-to-6 week MVP or Proof-of-Concept builds. We structure early milestones to validate technical feasibility, latency constraints, and user engagement before scaling.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span>How do you handle physical embedded hardware and IoT testing?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>We combine bench prototyping with real silicon hardware-in-the-loop (HIL) automated test benches. We validate thermal dissipation, power draw, RTOS deterministic timing, and over-the-air (OTA) updates under simulated degraded network conditions.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span>How do you protect proprietary data in AI/ML solutions?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>We deploy strictly private, isolated model inference pipelines inside your own cloud perimeter (VPC) or on-premise hardware. Your enterprise data never touches third-party public training corpora, and all vector databases operate under zero-trust encryption.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn">
+              <span>What production SLAs and post-launch support do you provide?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>We offer tailored SLA tiers up to 99.99% availability with automated 24/7 telemetry monitoring, automated rollbacks, and proactive performance tuning to support your ongoing product growth smoothly.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 10. FINAL CONTACT SECTION WITH QUICK ARCHITECTURE FORMULATOR -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        
+        <div class="contact-card-wrapper">
+          <div class="contact-grid">
+            
+            <!-- Left Info Column -->
+            <div class="contact-info-col">
+              <div class="section-label-badge dark">
+                <span class="label-dot violet"></span>
+                <span class="label-text">LET'S BUILD TOGETHER</span>
+              </div>
+
+              <h2 class="contact-headline">
+                HAVE A CHALLENGE IN MIND?
+              </h2>
+
+              <p class="contact-lead-text">
+                Tell us about your idea, business problem, or technical challenge. We'll explore the requirements with you and discuss how we can help turn it into a practical solution.
+              </p>
+
+              <!-- Interactive Quick Scope Formulator -->
+              <div class="scope-formulator-box">
+                <div class="formulator-header">
+                  <span class="formulator-badge">QUICK ARCHITECTURE FORMULATOR</span>
+                  <span class="formulator-sub">Select your project parameters to pre-fill enquiry</span>
+                </div>
+
+                <div class="formulator-param">
+                  <span class="param-label">Target Domain:</span>
+                  <div class="param-pills" id="param-domain-pills">
+                    <button type="button" class="formulator-chip active" data-val="AI & Machine Learning">AI &amp; ML</button>
+                    <button type="button" class="formulator-chip" data-val="Web Development">Web App</button>
+                    <button type="button" class="formulator-chip" data-val="Mobile App Development">Mobile</button>
+                    <button type="button" class="formulator-chip" data-val="Embedded Systems & Hardware">Embedded/IoT</button>
+                  </div>
+                </div>
+
+                <div class="formulator-param">
+                  <span class="param-label">Project Stage:</span>
+                  <div class="param-pills" id="param-stage-pills">
+                    <button type="button" class="formulator-chip active" data-val="Early-stage concept & architecture">Concept</button>
+                    <button type="button" class="formulator-chip" data-val="MVP Prototype build">MVP Build</button>
+                    <button type="button" class="formulator-chip" data-val="Enterprise production scaling">Scaling</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-callout-box">
+                <span class="callout-icon">💡</span>
+                <p class="callout-text">
+                  <strong>Have an early-stage idea?</strong> That's fine. You don't need a complete technical specification to get started.
+                </p>
+              </div>
+
+              <div class="verified-channels">
+                <span class="channels-title">Official Direct Channel</span>
+                <div class="channel-item">
+                  <span class="channel-label">Email:</span>
+                  <a href="mailto:swamiverseinfotek@gmail.com" class="channel-link">swamiverseinfotek@gmail.com</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Form Column (Exact Requested Fields) -->
+            <div class="contact-form-col">
+              <form id="contact-inquiry-form" class="inquiry-form" novalidate>
+                
+                <div class="form-group">
+                  <label for="contact-name">Full Name *</label>
+                  <input type="text" id="contact-name" name="fullName" required placeholder="e.g. Elena Rostova">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="contact-email">Business Email *</label>
+                    <input type="email" id="contact-email" name="businessEmail" required placeholder="name@company.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-company">Company or Organization (optional)</label>
+                    <input type="text" id="contact-company" name="company" placeholder="Organization name">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-problem">What problem are you trying to solve? *</label>
+                  <textarea id="contact-problem" name="problemStatement" rows="4" required placeholder="Describe your challenge, idea, or objective..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-solution-type">Type of solution required (optional)</label>
+                  <select id="contact-solution-type" name="solutionType">
+                    <option value="">Select a domain (optional)</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Mobile App Development">Mobile App Development</option>
+                    <option value="AI & Machine Learning">AI & Machine Learning</option>
+                    <option value="Cloud & DevOps">Cloud & DevOps</option>
+                    <option value="Embedded Systems & Hardware">Embedded Systems & Hardware</option>
+                    <option value="Robotics, IoT & Emerging Technologies">Robotics, IoT & Emerging Technologies</option>
+                    <option value="Full Spectrum / Not Sure">Full Spectrum / Need Guidance</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Engagement Preference</label>
+                  <div class="engagement-radio-group">
+                    <label class="radio-pill">
+                      <input type="radio" name="engagementPreference" value="Project-based" checked>
+                      <span>Project-based</span>
+                    </label>
+                    <label class="radio-pill">
+                      <input type="radio" name="engagementPreference" value="Long-term partnership">
+                      <span>Long-term partnership</span>
+                    </label>
+                    <label class="radio-pill">
+                      <input type="radio" name="engagementPreference" value="Not sure yet">
+                      <span>Not sure yet</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div id="form-error-msg" class="form-error-alert" style="display: none; margin-bottom: 1.15rem;">
+                  <span class="error-icon">⚠️</span>
+                  <span class="error-text">Unable to dispatch. Please check your network and try again.</span>
+                </div>
+
+                <div class="form-action-group">
+                  <button type="submit" class="btn btn-primary w-full" id="contact-submit-btn">
+                    Send Your Enquiry <span class="arrow" aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </form>
+
+              <!-- Success Notification State -->
+              <div class="form-success-box" id="form-success-box" style="display: none;">
+                <div class="success-checkmark">✓</div>
+                <h3 class="success-title">THANK YOU !!!! FOR YOUR INTEREST</h3>
+                <p class="success-msg">
+                  Thank you for reaching out. Your enquiry has been received and forwarded to our team. An engineering director will review your problem statement and reply directly via email shortly.
+                </p>
+                <button type="button" class="btn btn-outline" id="reset-enquiry-btn">Send Another Message</button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 10. FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Brand Summary -->
+        <div class="footer-summary-col">
+          <div class="brand-identity">
+            <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+            <span class="brand-text-stack">
+              <span class="brand-name-main">Swamiverse</span>
+              <span class="brand-name-sub">Infotek</span>
+            </span>
+          </div>
+          <p class="footer-tagline">
+            Engineering ideas. Empowering tomorrow.
+          </p>
+          <p class="footer-description">
+            We build practical technology solutions across software, AI, cloud, hardware, and emerging technologies.
+          </p>
+        </div>
+
+        <!-- Explore Navigation -->
+        <div class="footer-links-col">
+          <h4 class="footer-col-header">EXPLORE</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#work">Our Work</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Connect Links -->
+        <div class="footer-links-col">
+          <h4 class="footer-col-header">CONNECT</h4>
+          <ul class="footer-social-list">
+            <li>
+              <a href="mailto:swamiverseinfotek@gmail.com" class="footer-email-link" title="Direct Email">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg>
+                swamiverseinfotek@gmail.com
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <p class="copyright">
+          © <span id="current-year">2026</span> Swamiverse Infotek. All rights reserved.
+        </p>
+        <div class="footer-legal-links">
+          <a href="#">Privacy Policy</a>
+          <span class="dot-sep">·</span>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE MODAL: Service Stack Deep-Dive -->
+  <div class="modal-overlay" id="service-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div>
+          <span class="section-label-badge compact">
+            <span class="label-dot violet"></span>
+            <span id="service-modal-badge">SERVICE CAPABILITY</span>
+          </span>
+          <h3 class="modal-title" id="service-modal-title">WEB DEVELOPMENT ARCHITECTURE</h3>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal" id="service-modal-close">&times;</button>
+      </div>
+
+      <div class="modal-body-content">
+        <p class="modal-desc" id="service-modal-desc">
+          Scalable, high-performance websites and web applications designed around your business needs.
+        </p>
+
+        <div class="modal-spec-section">
+          <h4 class="spec-section-title">CORE TECHNOLOGY STACK</h4>
+          <div class="spec-pills-row" id="service-modal-stack">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="modal-spec-section">
+          <h4 class="spec-section-title">ENGINEERING DELIVERABLES</h4>
+          <ul class="spec-check-list" id="service-modal-deliverables">
+            <!-- Dynamically populated -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer-action">
+        <a href="#contact" class="btn btn-primary w-full" id="service-modal-cta">
+          Discuss This Solution <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE MODAL: Project Case Study Breakdown -->
+  <div class="modal-overlay" id="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div>
+          <span class="section-label-badge compact">
+            <span class="label-dot"></span>
+            <span id="project-modal-category">AI &amp; Analytics</span>
+          </span>
+          <h3 class="modal-title" id="project-modal-title">INTELLIGENT ANALYTICS PLATFORM</h3>
+        </div>
+        <button class="modal-close-btn" aria-label="Close modal" id="project-modal-close">&times;</button>
+      </div>
+
+      <!-- Modal Navigation Tabs -->
+      <div class="modal-tabs">
+        <button type="button" class="modal-tab-btn active" data-tab="overview">Overview</button>
+        <button type="button" class="modal-tab-btn" data-tab="topology">Topology Blueprint</button>
+        <button type="button" class="modal-tab-btn" data-tab="stack">Tech Stack</button>
+        <button type="button" class="modal-tab-btn" data-tab="outcome">Measurable Impact</button>
+      </div>
+
+      <div class="modal-body-content">
+        <!-- Tab 1: Overview & Challenge -->
+        <div class="modal-tab-pane active" id="pane-overview">
+          <p class="modal-desc" id="project-modal-desc">
+            Turning complex data into actionable insights through intelligent analysis and visualization.
+          </p>
+          <div class="modal-project-links" id="project-modal-links" style="display: none;">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="project-modal-live-link">
+              Check Prototype ↗
+            </a>
+          </div>
+          <div class="modal-spec-section">
+            <h4 class="spec-section-title">THE ENGINEERING CHALLENGE</h4>
+            <p class="modal-inner-text" id="project-modal-challenge">
+              Handling high-volume continuous telemetry while delivering sub-second query latency and intuitive semantic visual representations.
+            </p>
+          </div>
+          <div class="modal-spec-section" id="project-modal-features-wrap" style="display: none;">
+            <h4 class="spec-section-title">KEY ARCHITECTURAL &amp; ENGINEERING INNOVATIONS</h4>
+            <div class="modal-features-grid" id="project-modal-features">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: System Topology Blueprint -->
+        <div class="modal-tab-pane" id="pane-topology">
+          <h4 class="spec-section-title">SYSTEM ARCHITECTURE TOPOLOGY FLOW</h4>
+          <div class="blueprint-flow-container" id="project-modal-topology">
+            <!-- Dynamically populated interactive SVG flow diagram -->
+          </div>
+          <div class="modal-spec-section" id="project-modal-workflow-wrap" style="display: none; margin-top: 1.5rem;">
+            <h4 class="spec-section-title">END-TO-END SYSTEM EXECUTION LOOP</h4>
+            <div class="modal-workflow-steps" id="project-modal-workflow">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Tech Stack -->
+        <div class="modal-tab-pane" id="pane-stack">
+          <h4 class="spec-section-title">PRODUCTION TECHNOLOGY STACK</h4>
+          <div class="spec-pills-row" id="project-modal-tech">
+            <!-- Dynamically populated -->
+          </div>
+          <div class="modal-spec-section" id="project-modal-stack-details-wrap" style="display: none; margin-top: 1.5rem;">
+            <h4 class="spec-section-title">ARCHITECTURAL SUBSYSTEM BREAKDOWN</h4>
+            <div class="modal-stack-breakdown" id="project-modal-stack-details">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Measurable Outcomes -->
+        <div class="modal-tab-pane" id="pane-outcome">
+          <h4 class="spec-section-title">PRACTICAL REAL-WORLD ROI &amp; OUTCOMES</h4>
+          <p class="modal-inner-text" id="project-modal-outcome">
+            Empowered distributed operations teams to make high-confidence decisions with zero latency bottlenecks and automated alert classification.
+          </p>
+          <div class="modal-spec-section" id="project-modal-metrics-wrap" style="display: none; margin-top: 1.5rem;">
+            <h4 class="spec-section-title">MEASURABLE IMPACT TELEMETRY</h4>
+            <div class="modal-metrics-grid" id="project-modal-metrics">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer-action">
+        <a href="#contact" class="btn btn-primary w-full" id="project-modal-cta">
+          Build a Similar Platform <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Configuration & Main JavaScript -->
+  <script src="config.js"></script>
+  <script src="main.js?v=10.0"></script>
+</body>
+</html>

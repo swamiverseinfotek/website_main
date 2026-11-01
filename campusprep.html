@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusPrep — AI Voice Flight Simulator Case Study | Swamiverse Infotek</title>
+  <meta name="description" content="Deep-dive engineering case study for CampusPrep: an AI-driven, real-time voice mock interview platform with resume-adaptive MCP agent routing, alumni validation, and tamper-proof PDF scoring.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=4.0">
+
+  <style>
+    /* Custom Case Study Specific Styles */
+    .case-study-hero {
+      padding-top: 8.5rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .case-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-breadcrumb a {
+      color: var(--accent-gold-light);
+      text-decoration: none;
+      transition: color var(--duration-fast) ease;
+    }
+
+    .case-breadcrumb a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .case-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      color: #FFFFFF;
+    }
+
+    .case-lead {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.65;
+      color: var(--text-celestial-slate);
+      max-width: 860px;
+      margin-bottom: 2.25rem;
+    }
+
+    .case-actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .case-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 860px) {
+      .case-stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .case-stats-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-stat-box {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .case-stat-val {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 0.35rem;
+      line-height: 1;
+    }
+
+    .case-stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-ice-white);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .case-stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .case-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .case-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 860px) {
+      .case-grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-card-panel {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 2.25rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 14px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-card-panel.highlight {
+      border-color: rgba(212, 175, 110, 0.45);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 18, 36, 0.85) 100%);
+      box-shadow: var(--glass-bevel), 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(212, 175, 110, 0.18);
+    }
+
+    .panel-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-body {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: var(--text-celestial-slate);
+    }
+
+    .panel-body p {
+      margin-bottom: 1rem;
+    }
+
+    .panel-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .panel-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.94rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.5;
+    }
+
+    .panel-bullet-item .icon {
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .panel-bullet-item.warning .icon {
+      color: #F87171;
+    }
+
+    .panel-bullet-item.success .icon {
+      color: #34D399;
+    }
+
+    /* Innovation Cards Grid */
+    .innovations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .innovations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .innovations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .innovation-box {
+      background: rgba(14, 18, 36, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all var(--duration-fast) ease;
+    }
+
+    .innovation-box:hover {
+      border-color: rgba(212, 175, 110, 0.4);
+      background: rgba(20, 26, 54, 0.9);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 110, 0.15);
+    }
+
+    .innovation-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .innovation-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+    }
+
+    .innovation-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .innovation-desc {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.6;
+    }
+
+    /* Workflow Stepper */
+    .workflow-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-card {
+      background: rgba(14, 18, 36, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.35rem 1.75rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: all var(--duration-fast) ease;
+    }
+
+    @media (max-width: 680px) {
+      .timeline-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(212, 175, 110, 0.35);
+      background: rgba(22, 28, 56, 0.85);
+      transform: translateX(4px);
+    }
+
+    .timeline-num {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.4);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.5;
+    }
+
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Tech Stack Matrix Table */
+    .tech-table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 11, 24, 0.8);
+    }
+
+    .tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .tech-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tech-table td {
+      padding: 1rem 1.25rem;
+      color: var(--text-celestial-slate);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      line-height: 1.5;
+    }
+
+    .tech-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tech-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: #FFFFFF;
+    }
+
+    .tech-layer-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-gold-light);
+    }
+
+    /* Topology Blueprint Frame */
+    .blueprint-frame {
+      background: rgba(8, 10, 20, 0.95);
+      border: 1px solid rgba(212, 175, 110, 0.3);
+      border-radius: 14px;
+      padding: 1.75rem;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+      margin-top: 1.5rem;
+    }
+
+    /* Final CTA Card */
+    .case-cta-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 110, 0.15) 0%, rgba(14, 18, 36, 0.95) 100%);
+      border: 1px solid rgba(212, 175, 110, 0.45);
+      border-radius: 18px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 110, 0.2);
+    }
+
+    .case-cta-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+
+    .case-cta-desc {
+      font-size: 1.1rem;
+      color: var(--text-celestial-slate);
+      max-width: 650px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+
+    .case-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particle Constellation & Stardust Canvas -->
+  <canvas id="bg-constellation-canvas" class="bg-constellation" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Glow Blobs -->
+  <div class="nebula-glow nebula-top-right" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-mid-left" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom-right" aria-hidden="true"></div>
+
+  <!-- Top Reading Progress Indicator -->
+  <div id="scroll-progress-bar" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-identity" aria-label="Swamiverse Infotek Home">
+        <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+        <span class="brand-text-stack">
+          <span class="brand-name-main">Swamiverse</span>
+          <span class="brand-name-sub">Infotek</span>
+        </span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#home" class="nav-link">Home</a></li>
+          <li><a href="index.html#work" class="nav-link active">Featured Work</a></li>
+          <li><a href="index.html#services" class="nav-link">Services</a></li>
+          <li><a href="index.html#process" class="nav-link">Process</a></li>
+          <li><a href="index.html#estimator" class="nav-link">Estimator</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="https://campus-prep.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="header-live-cta">
+          Check Prototype <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="index.html#work" class="mobile-nav-link">Featured Work</a></li>
+        <li><a href="index.html#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="index.html#contact" class="mobile-nav-link">Contact</a></li>
+        <li><a href="https://campus-prep.vercel.app/" target="_blank" rel="noopener noreferrer" class="mobile-nav-link">Check Prototype ↗</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="case-study-hero">
+      <div class="container">
+        
+        <div class="case-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#work">Featured Work</a>
+          <span>/</span>
+          <span>CampusPrep Case Study</span>
+        </div>
+
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">FLAGSHIP AI &amp; ANALYTICS CASE STUDY · LIVE PRODUCTION DEPLOYMENT</span>
+        </div>
+
+        <h1 class="case-title">
+          CampusPrep — AI Voice Flight Simulator for Campus Placements
+        </h1>
+
+        <p class="case-lead">
+          An AI-powered voice interview preparation and placement simulation system that gives students realistic, voice-driven mock interviews — evaluated in real time by Gemini LLMs, dynamically routed by an MCP agent harness, and validated by real alumni — so candidates walk into corporate recruiter rounds with genuine practice, not guesswork.
+        </p>
+
+        <div class="case-actions-bar">
+          <a href="https://campus-prep.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Check Prototype <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+
+        <!-- KPI Telemetry Strip -->
+        <div class="case-stats-strip">
+          <div class="case-stat-box">
+            <div class="case-stat-val">0s</div>
+            <div class="case-stat-label">Mid-Interview Typing</div>
+            <div class="case-stat-sub">100% spoken conversational speech pipeline</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">&lt;150ms</div>
+            <div class="case-stat-label">Interruption Cancellation</div>
+            <div class="case-stat-sub">Instant AI audio cancel on candidate speech</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">5,000+</div>
+            <div class="case-stat-label">Placement Cohort Scale</div>
+            <div class="case-stat-sub">Zero human interviewer bandwidth bottleneck</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">100%</div>
+            <div class="case-stat-label">Verifiable Scorecards</div>
+            <div class="case-stat-sub">Tamper-proof immutable PDF result documents</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: THE PROBLEM VS THE SOLUTION -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">EXECUTIVE CONTEXT</span>
+        </div>
+        <h2 class="section-title">Why Traditional Interview Prep Fails</h2>
+        <p class="section-intro">
+          Most university candidates enter campus recruitment rounds without genuine spoken practice, objective feedback, or verifiable metrics.
+        </p>
+
+        <div class="case-grid-2col" style="margin-top: 2rem;">
+          
+          <!-- The Problem Panel -->
+          <div class="case-card-panel">
+            <h3 class="panel-title">
+              <span>⚠️</span> The Placement Preparation Dilemma
+            </h3>
+            <div class="panel-body">
+              <p>
+                In standard university ecosystems, campus placements determine students' career trajectories. Yet traditional mock interview methods face structural bottlenecks that cannot scale:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Severe Interviewer Scarcity:</strong> Only a handful of faculty or invited seniors can conduct mock interviews. A batch of 5,000 engineering students cannot obtain individual practice.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Subjective &amp; Inconsistent Bias:</strong> Evaluation quality depends entirely on who conducts the session, with zero standardized scoring rubrics.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Text Forms Fail Reality:</strong> Multiple-choice quizzes or typing forms do not prepare candidates for the psychological pressure of speaking out loud to a recruiter.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- The Solution Panel -->
+          <div class="case-card-panel highlight">
+            <h3 class="panel-title">
+              <span>✦</span> The CampusPrep Flight Simulator
+            </h3>
+            <div class="panel-body">
+              <p>
+                CampusPrep solves this by replacing scarce human availability with an AI interviewer that is always available, consistent, and resume-adaptive — while keeping real alumni in the loop for industry validation:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Live Spoken Voice Rounds:</strong> Speech-to-Text and Text-to-Speech Web APIs deliver low-latency back-and-forth verbal dialogue without typing.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>MCP Agent Resume Routing:</strong> Automatically evaluates student qualifications and calibrates difficulty (deep tech grilling vs foundational).</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Tri-Role Synced Dashboards:</strong> Candidates, Alumni Reviewers, and Placement Admins operate in full real-time synchronization.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Tamper-Proof Immutable Certification:</strong> Cloud-backed, cryptographic PDF scorecards prevent retroactive alterations.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: KEY ARCHITECTURAL & ENGINEERING INNOVATIONS -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">CORE ENGINEERING INNOVATIONS</span>
+        </div>
+        <h2 class="section-title">What Makes CampusPrep Feel Truly Real</h2>
+        <p class="section-intro">
+          Six foundational architectural subsystems engineered to elevate CampusPrep beyond generic LLM wrappers into an authentic interview simulator.
+        </p>
+
+        <div class="innovations-grid">
+          
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🎙️</div>
+              <h3 class="innovation-title">Voice AI Flight Simulator</h3>
+            </div>
+            <p class="innovation-desc">
+              Speech-to-Text (STT) converts candidate speech in real time, while Text-to-Speech (TTS) voices AI questions out loud. Engineered for sub-second turnaround so interactions feel conversational rather than robotic.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">⚡</div>
+              <h3 class="innovation-title">Interruption Cancellation</h3>
+            </div>
+            <p class="innovation-desc">
+              If a candidate begins speaking while the AI interviewer is talking, the AI voice stream cancels instantaneously (&lt;150ms), mimicking the natural audio etiquette of a human interview panel.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🧠</div>
+              <h3 class="innovation-title">MCP Agent Decision Harness</h3>
+            </div>
+            <p class="innovation-desc">
+              The Model Control &amp; Processing (MCP) agent parses candidate resumes to dynamically route interview tracks — final-year engineers face architectural challenges, while beginners receive foundational coaching.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">👥</div>
+              <h3 class="innovation-title">Tri-Role Synced Ecosystem</h3>
+            </div>
+            <p class="innovation-desc">
+              Three synced dashboards: 🧑🎓 <strong>Student</strong> (sessions &amp; feedback), 🎓 <strong>Alumni</strong> (request queue &amp; rubric validation), and 🛡️ <strong>Admin</strong> (campus-wide fairness and account verification).
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🛡️</div>
+              <h3 class="innovation-title">Tamper-Proof PDF Storage</h3>
+            </div>
+            <p class="innovation-desc">
+              Completed interviews auto-generate standardized PDF scorecards stored immutably on Google Cloud Platform / Firebase, giving Training &amp; Placement cells verifiable proof of candidate readiness.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🔁</div>
+              <h3 class="innovation-title">Silence &amp; Re-prompting Guardrails</h3>
+            </div>
+            <p class="innovation-desc">
+              Handles low-confidence transcriptions and silence without failing silently. The AI politely prompts the candidate to repeat or clarify, mirroring actual remote phone and video screens.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: SYSTEM ARCHITECTURE & TOPOLOGY BLUEPRINT -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">SYSTEM ARCHITECTURE</span>
+        </div>
+        <h2 class="section-title">End-to-End Topology Blueprint</h2>
+        <p class="section-intro">
+          Full data flow tracing candidate voice streams, agent routing, LLM reasoning, alumni verification, and immutable storage.
+        </p>
+
+        <div class="blueprint-frame">
+          <svg viewBox="0 0 760 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+            <!-- Step 1: Candidate Voice -->
+            <rect x="15" y="55" width="130" height="52" rx="8" fill="#141628" stroke="#8B5CF6" stroke-width="1.5"/>
+            <text x="80" y="78" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">Candidate Voice</text>
+            <text x="80" y="93" fill="#94A3B8" font-size="9" font-family="monospace" text-anchor="middle">STT Web Speech API</text>
+
+            <line x1="145" y1="81" x2="195" y2="81" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="3 3"/>
+            <polygon points="195,81 187,77 187,85" fill="#8B5CF6"/>
+
+            <!-- Step 2: MCP Agent Harness -->
+            <rect x="195" y="55" width="140" height="52" rx="8" fill="#141628" stroke="#A78BFA" stroke-width="1.5"/>
+            <text x="265" y="78" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">MCP Agent Harness</text>
+            <text x="265" y="93" fill="#A78BFA" font-size="9" font-family="monospace" text-anchor="middle">Resume Difficulty Router</text>
+
+            <line x1="335" y1="81" x2="385" y2="81" stroke="#A78BFA" stroke-width="2"/>
+            <polygon points="385,81 377,77 377,85" fill="#A78BFA"/>
+
+            <!-- Step 3: Gemini LLM Engine -->
+            <rect x="385" y="55" width="140" height="52" rx="8" fill="#141628" stroke="#F59E0B" stroke-width="1.5"/>
+            <text x="455" y="78" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">Gemini 1.5 Pro</text>
+            <text x="455" y="93" fill="#F59E0B" font-size="9" font-family="monospace" text-anchor="middle">Adaptive Reasoning &amp; TTS</text>
+
+            <line x1="525" y1="81" x2="575" y2="81" stroke="#F59E0B" stroke-width="2" stroke-dasharray="3 3"/>
+            <polygon points="575,81 567,77 567,85" fill="#F59E0B"/>
+
+            <!-- Step 4: Tri-Role Sync & PDF -->
+            <rect x="575" y="55" width="165" height="52" rx="8" fill="#141628" stroke="#10B981" stroke-width="1.5"/>
+            <text x="657" y="78" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">Alumni Review &amp; PDF</text>
+            <text x="657" y="93" fill="#10B981" font-size="9" font-family="monospace" text-anchor="middle">Immutable Firebase Storage</text>
+          </svg>
+        </div>
+
+        <!-- 6-Stage Timeline -->
+        <div class="workflow-timeline">
+          
+          <div class="timeline-card">
+            <div class="timeline-num">1</div>
+            <div class="timeline-content">
+              <h4>Candidate Resume Upload &amp; Semantic Parsing</h4>
+              <p>The student uploads their resume PDF through the React client. Work history, technical competencies, and project stacks are extracted and analyzed.</p>
+            </div>
+            <span class="timeline-badge">PDF Parser Engine</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">2</div>
+            <div class="timeline-content">
+              <h4>MCP Agent Difficulty &amp; Question Track Calibration</h4>
+              <p>The MCP (Model Control &amp; Processing) agent evaluates experience depth: qualified candidates receive specialized domain technical tracks, while beginners receive foundational rounds.</p>
+            </div>
+            <span class="timeline-badge">Decision Logic</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">3</div>
+            <div class="timeline-content">
+              <h4>Live Bidirectional Voice Interview Round</h4>
+              <p>The AI speaks interview questions aloud using the Web Speech TTS engine. The candidate speaks their answers verbally via Web Speech STT with zero mid-interview forms to fill.</p>
+            </div>
+            <span class="timeline-badge">Low-Latency Audio</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">4</div>
+            <div class="timeline-content">
+              <h4>Interruption &amp; Natural Cadence Guardrails</h4>
+              <p>If the student starts talking while the AI is speaking, the audio instantly cuts off. Silence or low-confidence recordings trigger polite conversational re-prompting.</p>
+            </div>
+            <span class="timeline-badge">Real-Time Eventing</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">5</div>
+            <div class="timeline-content">
+              <h4>Multi-Dimensional AI Evaluation</h4>
+              <p>Gemini LLM scores candidate responses across conceptual depth, problem-solving structure, communication clarity, and resume alignment without human fatigue or bias.</p>
+            </div>
+            <span class="timeline-badge">LLM Rubrics</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">6</div>
+            <div class="timeline-content">
+              <h4>Alumni Validation &amp; Immutable PDF Scorecard</h4>
+              <p>Industry alumni can inspect and validate the session. A tamper-proof PDF report is generated and linked across Student, Alumni, and Admin dashboards.</p>
+            </div>
+            <span class="timeline-badge">Verifiable Credential</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: COMPLETE PRODUCTION TECH STACK -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">PRODUCTION SPECIFICATIONS</span>
+        </div>
+        <h2 class="section-title">Architectural Tech Stack</h2>
+        <p class="section-intro">
+          Full breakdown of client, audio, backend, intelligence, and infrastructure components deployed in production.
+        </p>
+
+        <div class="tech-table-wrapper">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Technologies</th>
+                <th>Architectural Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tech-layer-tag">Frontend Client</span></td>
+                <td>React 18 (Vite), Tailwind CSS, Modern Glassmorphism UI</td>
+                <td>High-performance single-page application with responsive layouts and sub-second load times.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Voice AI Engine</span></td>
+                <td>Web Speech API (Speech-to-Text &amp; Text-to-Speech)</td>
+                <td>Zero-dependency browser speech recognition and synthesis pipeline with instant audio interruption cancellation.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Backend Services</span></td>
+                <td>Python 3.12, FastAPI, REST Endpoints, Firebase Admin SDK</td>
+                <td>Asynchronous microservices handling authentication, candidate session state, and scorecard compilation.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">AI &amp; Agent Harness</span></td>
+                <td>Google Gemini 1.5 Pro, MCP Agent Decision Engine</td>
+                <td>Multi-turn conversational reasoning, dynamic prompt guardrails, and resume-adaptive difficulty routing.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Cloud &amp; Storage</span></td>
+                <td>Google Cloud Platform (Firebase Auth, Cloud Storage), Vercel</td>
+                <td>Secure authentication, globally distributed serverless edge deployment, and immutable PDF file storage.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Security &amp; DevOps</span></td>
+                <td>Role-Based Access Control, Immutable Storage, Secret Isolation</td>
+                <td>Strict environment separation, zero credential leakage, and tamper-resistant audit logs.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA BANNER -->
+    <section class="container">
+      <div class="case-cta-banner">
+        <h2 class="case-cta-title">Explore CampusPrep Live or Build Your Own AI System</h2>
+        <p class="case-cta-desc">
+          Test the live voice interview flight simulator prototype directly on Vercel, or collaborate with Swamiverse Infotek to engineer custom AI platforms.
+        </p>
+        <div class="case-cta-actions">
+          <a href="https://campus-prep.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            Check Prototype <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="index.html#contact" class="btn btn-outline">
+            Consult With Swamiverse Infotek <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-top-brand">
+        <div class="footer-brand-title">
+          <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img" style="width:36px; height:auto; margin-right:8px; vertical-align:middle;">
+          Swamiverse Infotek
+        </div>
+        <p class="footer-tagline">
+          Complex problems. Thoughtfully engineered solutions across software, AI, hardware, and emerging tech.
+        </p>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          &copy; 2026 Swamiverse Infotek. All rights reserved. Built with precision and care.
+        </div>
+        <div class="footer-social-links">
+          <a href="index.html#home" class="footer-social-link">Home</a>
+          <a href="index.html#work" class="footer-social-link">Featured Work</a>
+          <a href="https://campus-prep.vercel.app/" target="_blank" rel="noopener noreferrer" class="footer-social-link">Check Prototype ↗</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="main.js?v=4.0"></script>
+</body>
+</html>

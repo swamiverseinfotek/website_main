@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABHEDYA — Intelligent Blackbox for Commercial Vehicles | Swamiverse Infotek</title>
+  <meta name="description" content="ABHEDYA: An intelligent IoT-based hardware blackbox system designed for commercial vehicles to improve transportation safety, cargo security, and journey accountability.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=4.0">
+
+  <style>
+    /* Case Study Custom Layouts & Design Tokens */
+    .case-study-hero {
+      padding-top: 8.5rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .case-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-breadcrumb a {
+      color: var(--accent-gold-light);
+      text-decoration: none;
+      transition: color var(--duration-fast) ease;
+    }
+
+    .case-breadcrumb a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .case-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      color: #FFFFFF;
+    }
+
+    .case-lead {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 860px;
+      margin-bottom: 2rem;
+    }
+
+    .case-actions-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .case-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      padding: 1.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .case-stat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .case-stat-val {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      line-height: 1;
+    }
+
+    .case-stat-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #FFFFFF;
+      margin-top: 0.25rem;
+    }
+
+    .case-stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .case-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .case-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 900px) {
+      .case-grid-2col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .case-card-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      transition: transform var(--duration-normal) ease, border-color var(--duration-normal) ease;
+    }
+
+    .case-card-panel:hover {
+      border-color: rgba(212, 175, 110, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .case-card-panel.highlight {
+      border-color: rgba(212, 175, 110, 0.35);
+      background: linear-gradient(145deg, rgba(20, 22, 40, 0.8) 0%, rgba(27, 30, 54, 0.9) 100%);
+    }
+
+    .panel-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .panel-body {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .panel-bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .panel-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .panel-bullet-item .icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+
+    .panel-bullet-item.warning .icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: #EF4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .panel-bullet-item.success .icon {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* Capabilities 3-Col Grid */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .capability-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      transition: all var(--duration-normal) ease;
+    }
+
+    .capability-card:hover {
+      border-color: rgba(212, 175, 110, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .capability-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .capability-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+    }
+
+    .capability-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Blueprint Flow Frame */
+    .blueprint-frame {
+      background: #0B0D18;
+      border: 1px solid rgba(212, 175, 110, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow-x: auto;
+    }
+
+    /* Comparison & Spec Tables */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      text-align: left;
+    }
+
+    .spec-table th,
+    .spec-table td {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .spec-table th {
+      background: rgba(20, 22, 40, 0.9);
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .spec-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .spec-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .status-completed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-upcoming {
+      background: rgba(245, 158, 11, 0.15);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .status-future {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94A3B8;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    /* Core Quote Frame */
+    .quote-callout {
+      background: linear-gradient(135deg, rgba(212, 175, 110, 0.1) 0%, rgba(20, 22, 40, 0.6) 100%);
+      border: 1px solid rgba(212, 175, 110, 0.35);
+      border-left: 4px solid var(--accent-gold);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .quote-callout-text {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-callout-sub {
+      font-size: 0.85rem;
+      color: var(--accent-gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    /* Roadmap Timeline */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .roadmap-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .roadmap-phase-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .roadmap-phase-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+    }
+
+    .roadmap-phase-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* Target Users Chips */
+    .chips-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .user-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: all var(--duration-fast) ease;
+    }
+
+    .user-chip:hover {
+      border-color: var(--accent-gold);
+      color: #FFFFFF;
+      background: rgba(212, 175, 110, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* CTA Banner */
+    .case-cta-banner {
+      background: linear-gradient(135deg, rgba(20, 22, 40, 0.95) 0%, rgba(27, 30, 54, 0.95) 100%);
+      border: 1px solid rgba(212, 175, 110, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin: 4rem 0 6rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-cta-title {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+    }
+
+    .case-cta-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 680px;
+      margin: 0 auto 2.25rem auto;
+      line-height: 1.6;
+    }
+
+    .case-cta-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Particle Constellation & Stardust Canvas -->
+  <canvas id="bg-constellation-canvas" class="bg-constellation" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Glow Blobs -->
+  <div class="nebula-glow nebula-top-right" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-mid-left" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom-right" aria-hidden="true"></div>
+
+  <!-- Top Reading Progress Indicator -->
+  <div id="scroll-progress-bar" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      
+      <!-- Brand Identity -->
+      <a href="index.html" class="brand-identity" aria-label="Swamiverse Infotek Home">
+        <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+        <span class="brand-text-stack">
+          <span class="brand-name-main">Swamiverse</span>
+          <span class="brand-name-sub">Infotek</span>
+        </span>
+      </a>
+
+      <!-- Horizontal Desktop Navigation -->
+      <nav class="main-navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#home" class="nav-link">Home</a></li>
+          <li><a href="index.html#work" class="nav-link active">Featured Work</a></li>
+          <li><a href="index.html#services" class="nav-link">Services</a></li>
+          <li><a href="index.html#process" class="nav-link">Process</a></li>
+          <li><a href="index.html#estimator" class="nav-link">Estimator</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="index.html#contact" class="btn btn-primary" id="header-prototype-cta">
+          Request Briefing <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="index.html#work" class="mobile-nav-link">Featured Work</a></li>
+        <li><a href="index.html#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="index.html#contact" class="mobile-nav-link">Contact</a></li>
+        <li><a href="index.html#contact" class="mobile-nav-link">Request Briefing →</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="case-study-hero" id="overview">
+      <div class="container">
+        
+        <div class="case-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#work">Featured Work</a>
+          <span>/</span>
+          <span>ABHEDYA Product Profile</span>
+        </div>
+
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">IOT HARDWARE · EMBEDDED SYSTEMS · TRANSPORTATION TECHNOLOGY</span>
+        </div>
+
+        <h1 class="case-title">
+          ABHEDYA — Intelligent Blackbox for Commercial Vehicles
+        </h1>
+
+        <p class="case-lead">
+          <strong>Inspired by Aircraft Blackbox Technology.</strong> An intelligent IoT-based hardware system designed for commercial vehicles to improve transportation safety, cargo security, and journey accountability through continuous monitoring and digital event recording.
+        </p>
+
+        <div class="case-actions-bar">
+          <a href="index.html#contact" class="btn btn-primary">
+            Request Product Briefing <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+
+        <!-- KPI Telemetry Strip -->
+        <div class="case-stats-strip">
+          <div class="case-stat-box">
+            <div class="case-stat-val">6-Step</div>
+            <div class="case-stat-label">Intelligent Lifecycle</div>
+            <div class="case-stat-sub">Monitor, Collect, Process, Record, Notify &amp; Review</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">Unified</div>
+            <div class="case-stat-label">Centralized System</div>
+            <div class="case-stat-sub">Vehicle, Cargo &amp; Incident monitoring in one solution</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">Pre-Seed</div>
+            <div class="case-stat-label">Development Stage</div>
+            <div class="case-stat-sub">Concept, virtual hardware &amp; initial PCB designed</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">Forensic</div>
+            <div class="case-stat-label">Digital Records</div>
+            <div class="case-stat-sub">Tamper-evident logs to support insurance investigations</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: EXECUTIVE CONTEXT -->
+    <section class="case-section" id="executive-context">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">1. EXECUTIVE CONTEXT</span>
+        </div>
+        <h2 class="section-title">Why Commercial Transportation Needs ABHEDYA</h2>
+        <p class="section-intro">
+          Commercial vehicles transport valuable cargo across long distances, facing serious transit vulnerabilities where traditional monitoring solutions operate in disconnected silos.
+        </p>
+
+        <div class="case-grid-2col" style="margin-top: 2rem;">
+          
+          <!-- The Industry Problem Panel -->
+          <div class="case-card-panel">
+            <h3 class="panel-title">
+              <span>⚠️</span> The Fragmented Monitoring Dilemma
+            </h3>
+            <div class="panel-body">
+              <p>
+                Traditional monitoring solutions offer separate services for vehicle tracking, video recording, and security monitoring. This creates fragmented data, making it difficult to obtain a complete, reliable picture of an incident:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Cargo Theft &amp; Unauthorized Access:</strong> Inability to correlate vehicle telemetry with cargo compartment breaches in real time.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Road Accidents &amp; Unexpected Incidents:</strong> Critical transit events occur without a unified forensic record of speed, movement, and impact.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Route Deviations &amp; Unapproved Stops:</strong> Movement tracking lacks integration with onboard sensor alerts and driver context.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Insurance Claim Investigation Friction:</strong> Missing or contested incident records prolong dispute resolution and claim payouts.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Uncoordinated Standalone Systems:</strong> Multi-vendor hardware adds complexity, maintenance overhead, and data blind spots.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- The ABHEDYA Solution Panel -->
+          <div class="case-card-panel highlight">
+            <h3 class="panel-title">
+              <span>✦</span> The ABHEDYA Concept
+            </h3>
+            <div class="panel-body">
+              <p>
+                Inspired by the flight data recorders (blackboxes) that safeguard aviation, ABHEDYA brings an equivalent incident-recording standard to commercial road transport:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Centralized Incident Recording:</strong> Unifies telemetry, cargo status, and vehicle movement into a single dedicated hardware device.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Continuous Event Evaluation:</strong> Onboard embedded intelligence evaluates telemetry continuously to identify unusual occurrences.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Tamper-Evident Journey Logs:</strong> Records critical events in a protected digital log format for post-incident review.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Remote Situational Alerts:</strong> Supports remote notifications to keep dispatch teams and operators informed of anomalies.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Objective Claim Verification:</strong> Delivers trustworthy digital proof that assists insurance adjusters and accident investigators.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: CORE PRODUCT CAPABILITIES -->
+    <section class="case-section" id="capabilities">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">2. CORE PRODUCT CAPABILITIES</span>
+        </div>
+        <h2 class="section-title">What Makes ABHEDYA Useful?</h2>
+        <p class="section-intro">
+          Designed from the ground up to solve the core security, accountability, and investigative challenges of modern commercial fleets.
+        </p>
+
+        <div class="capabilities-grid">
+          
+          <div class="capability-card">
+            <span class="capability-icon">🚗</span>
+            <h3 class="capability-title">Vehicle Monitoring</h3>
+            <p class="capability-desc">
+              Supports continuous monitoring of important vehicle activities, operational status, and journey-related information throughout transit.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <span class="capability-icon">📦</span>
+            <h3 class="capability-title">Cargo Security</h3>
+            <p class="capability-desc">
+              Helps monitor cargo-related security conditions and identify suspicious activities, unauthorized compartment access, or tampering attempts.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <span class="capability-icon">🚨</span>
+            <h3 class="capability-title">Incident Monitoring</h3>
+            <p class="capability-desc">
+              Supports real-time identification and recording of important events occurring during transportation, such as sudden impacts or extreme route deviations.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <span class="capability-icon">📼</span>
+            <h3 class="capability-title">Digital Event Recording</h3>
+            <p class="capability-desc">
+              Maintains relevant journey and incident records in a secure format for future reference, root-cause analysis, and post-trip investigation.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <span class="capability-icon">📡</span>
+            <h3 class="capability-title">Remote Monitoring</h3>
+            <p class="capability-desc">
+              Supports remote access to available vehicle telemetry and timely event notifications for fleet operations and dispatch centers.
+            </p>
+          </div>
+
+          <div class="capability-card">
+            <span class="capability-icon">⚖️</span>
+            <h3 class="capability-title">Insurance &amp; Investigation Support</h3>
+            <p class="capability-desc">
+              Provides incident-related digital records that assist insurance companies and independent investigators during claim verification and liability assessment.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: TECHNOLOGY DOMAIN -->
+    <section class="case-section" id="technology-domain">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">3. TECHNOLOGY DOMAIN</span>
+        </div>
+        <h2 class="section-title">Hardware and IoT-Based Product Architecture</h2>
+        <p class="section-intro">
+          ABHEDYA combines multiple engineering disciplines into an integrated commercial transportation product.
+        </p>
+
+        <div class="table-responsive">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th style="width: 35%;">Technology Domain</th>
+                <th>Application in ABHEDYA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Internet of Things (IoT)</strong></td>
+                <td>Connected vehicle monitoring and telemetry exchange</td>
+              </tr>
+              <tr>
+                <td><strong>Embedded Systems</strong></td>
+                <td>Intelligent hardware devices engineered for automotive operating environments</td>
+              </tr>
+              <tr>
+                <td><strong>Automotive Electronics</strong></td>
+                <td>Commercial vehicle electrical integration and chassis applications</td>
+              </tr>
+              <tr>
+                <td><strong>Sensor Technology</strong></td>
+                <td>Monitoring physical movement, environmental state, and compartment security</td>
+              </tr>
+              <tr>
+                <td><strong>Wireless Communication</strong></td>
+                <td>Remote connectivity, long-range cellular transmission, and dispatch messaging</td>
+              </tr>
+              <tr>
+                <td><strong>Data Recording Systems</strong></td>
+                <td>Tamper-resistant journey logs and digital incident records</td>
+              </tr>
+              <tr>
+                <td><strong>Cloud Computing</strong></td>
+                <td>Remote information management, fleet dashboarding, and audit storage</td>
+              </tr>
+              <tr>
+                <td><strong>Artificial Intelligence</strong></td>
+                <td>Potential intelligent data analysis, pattern anomaly detection, and risk scoring</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: HOW ABHEDYA WORKS -->
+    <section class="case-section" id="how-it-works">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">4. HOW ABHEDYA WORKS</span>
+        </div>
+        <h2 class="section-title">From Vehicle Monitoring to Incident Records</h2>
+        <p class="section-intro">
+          Operates as an intelligent monitoring and recording device installed in commercial vehicles, following an end-to-end 6-stage lifecycle.
+        </p>
+
+        <!-- SVG Lifecycle Flow Diagram -->
+        <div class="blueprint-frame">
+          <svg viewBox="0 0 780 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+            <!-- Step 1: Monitor -->
+            <rect x="10" y="45" width="105" height="50" rx="8" fill="#141628" stroke="#8B5CF6" stroke-width="1.5"/>
+            <text x="62" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">1. Monitor</text>
+            <text x="62" y="83" fill="#94A3B8" font-size="9" font-family="monospace" text-anchor="middle">Observe Activity</text>
+
+            <line x1="115" y1="70" x2="140" y2="70" stroke="#8B5CF6" stroke-width="2"/>
+            <polygon points="140,70 133,66 133,74" fill="#8B5CF6"/>
+
+            <!-- Step 2: Collect -->
+            <rect x="140" y="45" width="105" height="50" rx="8" fill="#141628" stroke="#A78BFA" stroke-width="1.5"/>
+            <text x="192" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">2. Collect</text>
+            <text x="192" y="83" fill="#94A3B8" font-size="9" font-family="monospace" text-anchor="middle">Gather Telemetry</text>
+
+            <line x1="245" y1="70" x2="270" y2="70" stroke="#A78BFA" stroke-width="2"/>
+            <polygon points="270,70 263,66 263,74" fill="#A78BFA"/>
+
+            <!-- Step 3: Process -->
+            <rect x="270" y="45" width="105" height="50" rx="8" fill="#141628" stroke="#F59E0B" stroke-width="1.5"/>
+            <text x="322" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">3. Process</text>
+            <text x="322" y="83" fill="#F59E0B" font-size="9" font-family="monospace" text-anchor="middle">Evaluate Events</text>
+
+            <line x1="375" y1="70" x2="400" y2="70" stroke="#F59E0B" stroke-width="2"/>
+            <polygon points="400,70 393,66 393,74" fill="#F59E0B"/>
+
+            <!-- Step 4: Record -->
+            <rect x="400" y="45" width="105" height="50" rx="8" fill="#141628" stroke="#D4AF6E" stroke-width="1.5"/>
+            <text x="452" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">4. Record</text>
+            <text x="452" y="83" fill="#D4AF6E" font-size="9" font-family="monospace" text-anchor="middle">Preserve Data</text>
+
+            <line x1="505" y1="70" x2="530" y2="70" stroke="#D4AF6E" stroke-width="2"/>
+            <polygon points="530,70 523,66 523,74" fill="#D4AF6E"/>
+
+            <!-- Step 5: Notify -->
+            <rect x="530" y="45" width="105" height="50" rx="8" fill="#141628" stroke="#38BDF8" stroke-width="1.5"/>
+            <text x="582" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">5. Notify</text>
+            <text x="582" y="83" fill="#38BDF8" font-size="9" font-family="monospace" text-anchor="middle">Dispatch Alerts</text>
+
+            <line x1="635" y1="70" x2="660" y2="70" stroke="#38BDF8" stroke-width="2"/>
+            <polygon points="660,70 653,66 653,74" fill="#38BDF8"/>
+
+            <!-- Step 6: Review -->
+            <rect x="660" y="45" width="110" height="50" rx="8" fill="#141628" stroke="#10B981" stroke-width="1.5"/>
+            <text x="715" y="68" fill="#FFFFFF" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">6. Review</text>
+            <text x="715" y="83" fill="#10B981" font-size="9" font-family="monospace" text-anchor="middle">Claim Audit</text>
+          </svg>
+        </div>
+
+        <div class="capabilities-grid" style="margin-top: 1.5rem;">
+          <div class="capability-card">
+            <h3 class="capability-title">1. Monitor</h3>
+            <p class="capability-desc">Continuously observes vital vehicle, movement, and transportation activities across every leg of the journey.</p>
+          </div>
+          <div class="capability-card">
+            <h3 class="capability-title">2. Collect</h3>
+            <p class="capability-desc">Gathers relevant multi-sensory telemetry throughout transit to build a cohesive operational data baseline.</p>
+          </div>
+          <div class="capability-card">
+            <h3 class="capability-title">3. Process</h3>
+            <p class="capability-desc">Evaluates incoming operational information on-device to rapidly detect unusual occurrences, impacts, or boundary breaches.</p>
+          </div>
+          <div class="capability-card">
+            <h3 class="capability-title">4. Record</h3>
+            <p class="capability-desc">Preserves important event-related records in a dedicated, tamper-evident digital format for long-term accountability.</p>
+          </div>
+          <div class="capability-card">
+            <h3 class="capability-title">5. Notify</h3>
+            <p class="capability-desc">Supports remote communication of relevant alerts to fleet supervisors and emergency dispatch personnel.</p>
+          </div>
+          <div class="capability-card">
+            <h3 class="capability-title">6. Review</h3>
+            <p class="capability-desc">Makes recorded information readily available for post-incident investigation, insurance verification, and safety auditing.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: PRODUCT DIFFERENTIATION -->
+    <section class="case-section" id="differentiation">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">5. PRODUCT DIFFERENTIATION</span>
+        </div>
+        <h2 class="section-title">Beyond Traditional Vehicle Tracking</h2>
+        <p class="section-intro">
+          Why standard GPS telematics falls short, and how ABHEDYA establishes a new category in commercial transportation accountability.
+        </p>
+
+        <div class="table-responsive">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th style="width: 45%;">Traditional Monitoring Solutions</th>
+                <th style="width: 55%; color: var(--accent-gold);">ABHEDYA Intelligent Blackbox</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Primarily focused on location tracking</td>
+                <td><strong>Broader transportation monitoring</strong> (vehicle state, cargo security, and journey events)</td>
+              </tr>
+              <tr>
+                <td>Separate, fragmented monitoring products</td>
+                <td><strong>Unified product concept</strong> consolidating telemetry and event recording</td>
+              </tr>
+              <tr>
+                <td>Individual, isolated activity alerts</td>
+                <td><strong>Comprehensive journey and incident records</strong></td>
+              </tr>
+              <tr>
+                <td>Limited investigation context during disputes</td>
+                <td><strong>Engineered specifically to support post-incident investigations</strong></td>
+              </tr>
+              <tr>
+                <td>Operational tracking and dispatch utility</td>
+                <td><strong>Dedicated focus on safety, cargo security, and verifiable accountability</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Core Quote Frame -->
+        <div class="quote-callout">
+          <div class="quote-callout-text">
+            “Aircraft blackboxes help investigators understand what happened during a flight. ABHEDYA aims to bring the concept of intelligent event monitoring and recording to commercial road transportation.”
+          </div>
+          <div class="quote-callout-sub">
+            Core Positioning &amp; Design Philosophy
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: TARGET INDUSTRIES & USERS -->
+    <section class="case-section" id="target-industries">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">6. TARGET INDUSTRIES &amp; USERS</span>
+        </div>
+        <h2 class="section-title">Target Ecosystem &amp; Stakeholders</h2>
+        <p class="section-intro">
+          ABHEDYA is engineered for stakeholders across commercial logistics, fleet management, and insurance investigation.
+        </p>
+
+        <div class="chips-cloud">
+          <span class="user-chip">🚛 Commercial Truck Owners</span>
+          <span class="user-chip">🏢 Small &amp; Medium Fleet Operators</span>
+          <span class="user-chip">📦 Logistics &amp; Transportation Companies</span>
+          <span class="user-chip">🌐 Third-Party Logistics (3PL) Providers</span>
+          <span class="user-chip">💎 High-Value Cargo Transporters</span>
+          <span class="user-chip">🏛️ Insurance Companies</span>
+          <span class="user-chip">🔍 Vehicle &amp; Cargo Claims Investigators</span>
+          <span class="user-chip">🛣️ Commercial Transportation Service Providers</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: INDUSTRIAL APPLICATIONS -->
+    <section class="case-section" id="industrial-applications">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">7. INDUSTRIAL APPLICATIONS</span>
+        </div>
+        <h2 class="section-title">Practical Industrial Deployments</h2>
+        <p class="section-intro">
+          Addressing real-world vulnerabilities across transportation and supply chain operations.
+        </p>
+
+        <div class="table-responsive">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th style="width: 35%;">Industry Sector</th>
+                <th>Potential Practical Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Logistics</strong></td>
+                <td>Comprehensive vehicle and cargo security monitoring during transit</td>
+              </tr>
+              <tr>
+                <td><strong>Transportation</strong></td>
+                <td>Journey monitoring, route compliance, and transit accountability</td>
+              </tr>
+              <tr>
+                <td><strong>Insurance</strong></td>
+                <td>Accident, damage, and cargo loss claim investigation support</td>
+              </tr>
+              <tr>
+                <td><strong>Supply Chain</strong></td>
+                <td>High-value cargo security and end-to-end transportation visibility</td>
+              </tr>
+              <tr>
+                <td><strong>Fleet Management</strong></td>
+                <td>Centralized vehicle activity and operational health monitoring</td>
+              </tr>
+              <tr>
+                <td><strong>Commercial Vehicles</strong></td>
+                <td>Standardized digital event recording for road safety compliance</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 8: DEVELOPMENT STATUS -->
+    <section class="case-section" id="development-status">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">8. DEVELOPMENT STATUS</span>
+        </div>
+        <h2 class="section-title">Pre-seed / Prototype Development Stage</h2>
+        <p class="section-intro">
+          ABHEDYA is currently progressing from its hardware design stage toward physical prototype fabrication and field validation.
+        </p>
+
+        <div class="table-responsive">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th style="width: 60%;">Development Activity</th>
+                <th>Current Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Product Concept &amp; Requirement Definition</td>
+                <td><span class="status-badge status-completed">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Hardware Requirements Identification</td>
+                <td><span class="status-badge status-completed">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Initial PCB Design</td>
+                <td><span class="status-badge status-completed">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Virtual Hardware Design &amp; Modeling</td>
+                <td><span class="status-badge status-completed">✓ Completed</span></td>
+              </tr>
+              <tr>
+                <td>Physical Hardware Fabrication</td>
+                <td><span class="status-badge status-upcoming">⏳ Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Prototype Assembly</td>
+                <td><span class="status-badge status-upcoming">⏳ Upcoming</span></td>
+              </tr>
+              <tr>
+                <td>Bench &amp; Functional Product Testing</td>
+                <td><span class="status-badge status-future">Pending</span></td>
+              </tr>
+              <tr>
+                <td>Vehicle-Level Field Validation</td>
+                <td><span class="status-badge status-future">Future Stage</span></td>
+              </tr>
+              <tr>
+                <td>Commercial Fleet Deployment</td>
+                <td><span class="status-badge status-future">Future Stage</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 9: FUTURE DEVELOPMENT ROADMAP -->
+    <section class="case-section" id="roadmap">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">9. FUTURE DEVELOPMENT ROADMAP</span>
+        </div>
+        <h2 class="section-title">Strategic Horizon &amp; Milestones</h2>
+        <p class="section-intro">
+          A structured 5-phase execution plan guiding ABHEDYA from initial prototype to commercial fleet deployment.
+        </p>
+
+        <div class="roadmap-grid">
+          
+          <div class="roadmap-card">
+            <span class="roadmap-phase-tag">Phase 1</span>
+            <h3 class="roadmap-phase-title">Hardware Development</h3>
+            <p class="roadmap-phase-desc">Fabrication of the physical hardware board, component assembly, and enclosure prototype.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <span class="roadmap-phase-tag">Phase 2</span>
+            <h3 class="roadmap-phase-title">Product Integration</h3>
+            <p class="roadmap-phase-desc">Firmware bringing together vehicle telemetry, sensor fusion, and digital event recording capabilities.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <span class="roadmap-phase-tag">Phase 3</span>
+            <h3 class="roadmap-phase-title">Testing &amp; Validation</h3>
+            <p class="roadmap-phase-desc">Stress testing and performance evaluation under simulated practical road transportation conditions.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <span class="roadmap-phase-tag">Phase 4</span>
+            <h3 class="roadmap-phase-title">Pilot Deployment</h3>
+            <p class="roadmap-phase-desc">Controlled field trials with selected commercial vehicle owners and regional fleet operators.</p>
+          </div>
+
+          <div class="roadmap-card">
+            <span class="roadmap-phase-tag">Phase 5</span>
+            <h3 class="roadmap-phase-title">Commercial Development</h3>
+            <p class="roadmap-phase-desc">Refining manufacturing repeatability, cloud portal usability, and enterprise deployment readiness.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 10: VISION & FINAL CTA BANNER -->
+    <section class="container" id="vision">
+      <div class="case-cta-banner">
+        
+        <div class="section-label-badge" style="justify-content: center; margin-bottom: 1.25rem;">
+          <span class="label-dot"></span>
+          <span class="label-text">10. PRODUCT VISION</span>
+        </div>
+
+        <h2 class="case-cta-title">Every Commercial Vehicle Deserves a Digital Blackbox.</h2>
+        
+        <p class="case-cta-desc">
+          ABHEDYA aims to improve the safety, security, and accountability of commercial transportation by bringing intelligent blackbox technology to road vehicles.
+          <br><br>
+          <strong style="color: var(--accent-gold); font-size: 1.15rem; letter-spacing: 0.05em;">
+            Monitor the Journey. Record the Events. Support the Truth.
+          </strong>
+        </p>
+
+        <div class="case-cta-actions">
+          <a href="index.html#contact" class="btn btn-primary">
+            Discuss Partnership &amp; Pilot Deployment <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Explore Other Engineering Solutions
+          </a>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+          * Confidential Notice: This page presents a high-level public product overview. Proprietary schematics, patent disclosures, and detailed implementation drawings are reserved for formal confidential technical reviews.
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-top-brand">
+        <div class="footer-brand-title">
+          <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img" style="width:36px; height:auto; margin-right:8px; vertical-align:middle;">
+          Swamiverse Infotek
+        </div>
+        <p class="footer-tagline">
+          Complex problems. Thoughtfully engineered solutions across software, AI, hardware, and emerging tech.
+        </p>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          &copy; 2026 Swamiverse Infotek. All rights reserved. Built with precision and care.
+        </div>
+        <div class="footer-social-links">
+          <a href="index.html#home" class="footer-social-link">Home</a>
+          <a href="index.html#work" class="footer-social-link">Featured Work</a>
+          <a href="index.html#contact" class="footer-social-link">Request Briefing →</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="main.js?v=4.0"></script>
+</body>
+</html>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyClaim — Enterprise Financial Recovery &amp; Claim Management Portal | Swamiverse Infotek</title>
+  <meta name="description" content="Deep-dive engineering case study for MyClaim: an end-to-end, multi-tier claims management and investor recovery portal powered by real-time WebSockets, in-browser OCR verification, and a CrewAI multi-agent workforce.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Fonts: Inter, Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=4.0">
+
+  <style>
+    /* Custom Case Study Specific Styles */
+    .case-study-hero {
+      padding-top: 8.5rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .case-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-breadcrumb a {
+      color: var(--accent-gold-light);
+      text-decoration: none;
+      transition: color var(--duration-fast) ease;
+    }
+
+    .case-breadcrumb a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .case-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      color: #FFFFFF;
+    }
+
+    .case-lead {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.65;
+      color: var(--text-celestial-slate);
+      max-width: 890px;
+      margin-bottom: 2.25rem;
+    }
+
+    .case-actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .case-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 860px) {
+      .case-stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .case-stats-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-stat-box {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 12px 30px rgba(0, 0, 0, 0.5);
+      transition: transform var(--duration-fast) ease, border-color var(--duration-fast) ease;
+    }
+
+    .case-stat-box:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 110, 0.4);
+    }
+
+    .case-stat-val {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 0.35rem;
+      line-height: 1;
+    }
+
+    .case-stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-ice-white);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .case-stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .case-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .case-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 860px) {
+      .case-grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-card-panel {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 2.25rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 14px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-card-panel.highlight {
+      border-color: rgba(212, 175, 110, 0.45);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 18, 36, 0.85) 100%);
+      box-shadow: var(--glass-bevel), 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(212, 175, 110, 0.18);
+    }
+
+    .panel-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-body {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: var(--text-celestial-slate);
+    }
+
+    .panel-body p {
+      margin-bottom: 1rem;
+    }
+
+    .panel-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .panel-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.94rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.55;
+    }
+
+    .panel-bullet-item .icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .panel-bullet-item.warning .icon {
+      color: #F87171;
+    }
+
+    .panel-bullet-item.success .icon {
+      color: #34D399;
+    }
+
+    /* Innovation Cards Grid */
+    .innovations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .innovations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .innovations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .innovation-box {
+      background: rgba(14, 18, 36, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all var(--duration-fast) ease;
+    }
+
+    .innovation-box:hover {
+      border-color: rgba(212, 175, 110, 0.4);
+      background: rgba(20, 26, 54, 0.9);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 110, 0.15);
+    }
+
+    .innovation-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .innovation-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+    }
+
+    .innovation-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .innovation-desc {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.6;
+    }
+
+    /* Workflow Stepper */
+    .workflow-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-card {
+      background: rgba(14, 18, 36, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.35rem 1.75rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: all var(--duration-fast) ease;
+    }
+
+    @media (max-width: 680px) {
+      .timeline-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(212, 175, 110, 0.35);
+      background: rgba(22, 28, 56, 0.85);
+      transform: translateX(4px);
+    }
+
+    .timeline-num {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.4);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.55;
+    }
+
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Tech Stack Matrix Table */
+    .tech-table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 11, 24, 0.8);
+    }
+
+    .tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .tech-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tech-table td {
+      padding: 1rem 1.25rem;
+      color: var(--text-celestial-slate);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      line-height: 1.55;
+    }
+
+    .tech-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tech-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: #FFFFFF;
+    }
+
+    .tech-layer-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-gold-light);
+    }
+
+    /* Topology Blueprint Frame */
+    .blueprint-frame {
+      background: rgba(8, 10, 20, 0.95);
+      border: 1px solid rgba(212, 175, 110, 0.3);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Final CTA Card */
+    .case-cta-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 110, 0.15) 0%, rgba(14, 18, 36, 0.95) 100%);
+      border: 1px solid rgba(212, 175, 110, 0.45);
+      border-radius: 18px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 110, 0.2);
+    }
+
+    .case-cta-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+
+    .case-cta-desc {
+      font-size: 1.1rem;
+      color: var(--text-celestial-slate);
+      max-width: 720px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+
+    .case-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particle Constellation & Stardust Canvas -->
+  <canvas id="bg-constellation-canvas" class="bg-constellation" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Glow Blobs -->
+  <div class="nebula-glow nebula-top-right" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-mid-left" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom-right" aria-hidden="true"></div>
+
+  <!-- Top Reading Progress Indicator -->
+  <div id="scroll-progress-bar" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-identity" aria-label="Swamiverse Infotek Home">
+        <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+        <span class="brand-text-stack">
+          <span class="brand-name-main">Swamiverse</span>
+          <span class="brand-name-sub">Infotek</span>
+        </span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#home" class="nav-link">Home</a></li>
+          <li><a href="index.html#work" class="nav-link active">Featured Work</a></li>
+          <li><a href="index.html#services" class="nav-link">Services</a></li>
+          <li><a href="index.html#process" class="nav-link">Process</a></li>
+          <li><a href="index.html#estimator" class="nav-link">Estimator</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="index.html#contact" class="btn btn-primary" id="header-live-cta">
+          Contact <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="index.html#work" class="mobile-nav-link">Featured Work</a></li>
+        <li><a href="index.html#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="index.html#contact" class="mobile-nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="case-study-hero">
+      <div class="container">
+        
+        <div class="case-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#work">Featured Work</a>
+          <span>/</span>
+          <span>MyClaim Case Study</span>
+        </div>
+
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">ENTERPRISE FINTECH &amp; RECOVERY PLATFORM · MULTI-AGENT WORKFORCE</span>
+        </div>
+
+        <h1 class="case-title">
+          MyClaim — Enterprise Financial Recovery &amp; Claim Management Portal
+        </h1>
+
+        <p class="case-lead">
+          An end-to-end, multi-tier claims management and investor recovery portal that unifies IEPF share/dividend retrieval, Pre-IPO allocations, wealth portfolios, and insurance claims into a single digitized workflow — powered by real-time WebSockets, in-browser OCR verification, and a CrewAI multi-agent workforce — so claimants, channel partners, and operations teams resolve complex claims with absolute speed, transparency, and precision.
+        </p>
+
+        <div class="case-actions-bar">
+          <a href="index.html#contact" class="btn btn-primary">
+            Contact <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+
+        <!-- ⚡ At-A-Glance System Metrics Strip -->
+        <div class="case-stats-strip">
+          <div class="case-stat-box">
+            <div class="case-stat-val">&lt;100ms</div>
+            <div class="case-stat-label">Real-Time Sync</div>
+            <div class="case-stat-sub">Instant duplex event push via Socket.io</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">8-Tier</div>
+            <div class="case-stat-label">Hierarchical RBAC</div>
+            <div class="case-stat-sub">Super Admin, Partner, Super Partner, Client &amp; Staff</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">100%</div>
+            <div class="case-stat-label">Client-Side OCR</div>
+            <div class="case-stat-sub">In-browser Tesseract.js data &amp; KYC extraction</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">0</div>
+            <div class="case-stat-label">Settlement Ambiguity</div>
+            <div class="case-stat-sub">Full audit trail &amp; tamper-proof PDF dossiers</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: EXECUTIVE CONTEXT (THE PROBLEM VS THE SOLUTION) -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">EXECUTIVE CONTEXT</span>
+        </div>
+        <h2 class="section-title">Why Traditional Claim &amp; Asset Recovery Fails</h2>
+        <p class="section-intro">
+          Most claimants and wealth investors face months of bureaucratic delays, lost physical paperwork, and opaque multi-agency tracking when attempting to recover unclaimed dividends, IEPF shares, and insurance settlements.
+        </p>
+
+        <div class="case-grid-2col" style="margin-top: 2rem;">
+          
+          <!-- The Problem Panel -->
+          <div class="case-card-panel">
+            <h3 class="panel-title">
+              <span>⚠️</span> The Financial Recovery Dilemma
+            </h3>
+            <div class="panel-body">
+              <p>
+                In modern financial ecosystems, recovering dormant securities, IEPF dividends, and settling contested insurance claims involves navigating complex multi-stakeholder chains. Traditional recovery workflows face structural bottlenecks:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Fragmented Partner-Client Chains:</strong> Independent financial advisors and regional channel partners operate on fragmented spreadsheets, causing lost leads and disconnected client histories.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Manual Document Processing Bottlenecks:</strong> KYC verification, share certificates, and indemnity bonds require days of manual human data entry, introducing frequent clerical errors.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Opaque Status Black-Holes:</strong> Claimants have zero real-time visibility into whether documents are submitted, under legal review, or filed with regulatory authorities.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Unstructured Ticket &amp; Case Escalations:</strong> Communication between operations personnel, legal underwriters, and field agents relies on disparate emails and messaging apps with no SLA accountability.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- The Solution Panel -->
+          <div class="case-card-panel highlight">
+            <h3 class="panel-title">
+              <span>✦</span> The MyClaim Unified Portal
+            </h3>
+            <div class="panel-body">
+              <p>
+                MyClaim solves this by replacing disjointed offline paperwork with an interconnected, real-time digital ecosystem designed for scale, transparency, and compliance:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Multi-Tier Hierarchical Portals:</strong> Role-segregated environments for Super Admins, Admins, Super Partners, Partners, Clients, and Operations Employees.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>In-Browser OCR &amp; Instant Document Classification:</strong> Tesseract.js extraction validates certificates, PAN cards, and identity documents instantly on upload.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Duplex Real-Time Synchronization:</strong> Socket.io event channels broadcast ticket updates, claim progress, and notifications with zero manual page refreshes.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Automated Legal Dossiers &amp; Exportable Reports:</strong> jsPDF and html2canvas generate standardized, tamper-resistant claim dossiers, proposals, and IEPF audit reports on demand.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: CORE ENGINEERING INNOVATIONS -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">CORE ENGINEERING INNOVATIONS</span>
+        </div>
+        <h2 class="section-title">What Makes MyClaim Feel Truly Enterprise-Grade</h2>
+        <p class="section-intro">
+          Six foundational architectural subsystems engineered to elevate MyClaim beyond generic CRM software into an enterprise-grade financial operations portal.
+        </p>
+
+        <div class="innovations-grid">
+          
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🎨</div>
+              <h3 class="innovation-title">Enterprise Form Animation &amp; Progressive Reveal</h3>
+            </div>
+            <p class="innovation-desc">
+              Engineered with custom motion utilities, floating labels, active-field spotlight effects, dynamic progress trackers, and 50+ keyframes to prevent visual fatigue across complex, multi-step financial onboarding forms without relying on bulky external UI kits.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">⚡</div>
+              <h3 class="innovation-title">Real-Time Socket.io Duplex Event Bus</h3>
+            </div>
+            <p class="innovation-desc">
+              Bi-directional WebSocket streaming keeps dashboards, operational queues, and client timelines synchronized. Status changes, ticket replies, and file approvals update across distributed user sessions in real time.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🔍</div>
+              <h3 class="innovation-title">In-Browser Tesseract.js OCR Pipeline</h3>
+            </div>
+            <p class="innovation-desc">
+              Eliminates backend processing bottlenecks by executing optical character recognition directly within the client browser. Extracts folio numbers, company names, and certificate IDs before payload transmission.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">👥</div>
+              <h3 class="innovation-title">Multi-Tier Hierarchical Channel Architecture</h3>
+            </div>
+            <p class="innovation-desc">
+              Models real-world financial distribution channels with Super Partner and Partner relationships. Features automated referral tracking, commission structures, and segregated client book views backed by strict Mongoose permission scopes.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">📄</div>
+              <h3 class="innovation-title">Client-Side Dossier &amp; PDF Generation</h3>
+            </div>
+            <p class="innovation-desc">
+              Enables instantaneous generation of client proposals, IEPF recovery requests, and operational summaries using jsPDF and html2canvas directly in the browser, eliminating heavy server-side PDF rendering delays.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🤖</div>
+              <h3 class="innovation-title">Integrated CrewAI Multi-Agent Autonomous Workforce</h3>
+            </div>
+            <p class="innovation-desc">
+              Backed by an autonomous Python agent crew (claim_agent, document_agent, employee_agent, finance_agent, notification_agent) capable of triaging missing documentation, calculating financial summaries, and routing requests dynamically.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: SYSTEM ARCHITECTURE & TOPOLOGY BLUEPRINT -->
+    <section class="case-section" id="blueprint">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">SYSTEM ARCHITECTURE</span>
+        </div>
+        <h2 class="section-title">End-to-End Topology Blueprint</h2>
+        <p class="section-intro">
+          Full data flow tracing document uploads, client-side OCR extraction, bi-directional socket eventing, role-based authorization, and agentic validation.
+        </p>
+
+        <!-- Interactive Architecture Flow Diagram -->
+        <div class="blueprint-frame">
+          <svg viewBox="0 0 1100 170" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+            <defs>
+              <linearGradient id="grad-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+              </linearGradient>
+              <linearGradient id="node-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#141830" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#0E1224" stop-opacity="0.95"/>
+              </linearGradient>
+              <filter id="glow-gold" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Node 1: Client / Partner Web App -->
+            <rect x="15" y="45" width="155" height="70" rx="10" fill="url(#node-bg)" stroke="#8B5CF6" stroke-width="1.6"/>
+            <text x="92" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">Client / Partner App</text>
+            <text x="92" y="93" fill="#A78BFA" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">React 18 · Framer Motion</text>
+
+            <!-- Connector 1 -> 2 -->
+            <line x1="170" y1="80" x2="202" y2="80" stroke="#8B5CF6" stroke-width="2" stroke-dasharray="3 3"/>
+            <polygon points="202,80 194,76 194,84" fill="#8B5CF6"/>
+
+            <!-- Node 2: In-Browser Tesseract.js OCR -->
+            <rect x="202" y="45" width="155" height="70" rx="10" fill="url(#node-bg)" stroke="#D4AF37" stroke-width="1.6"/>
+            <text x="279" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">Tesseract.js OCR</text>
+            <text x="279" y="93" fill="#FBBF24" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Client-Side Extraction</text>
+
+            <!-- Connector 2 -> 3 -->
+            <line x1="357" y1="80" x2="389" y2="80" stroke="#D4AF37" stroke-width="2"/>
+            <polygon points="389,80 381,76 381,84" fill="#D4AF37"/>
+
+            <!-- Node 3: Express.js & Socket.io Gateway -->
+            <rect x="389" y="45" width="165" height="70" rx="10" fill="url(#node-bg)" stroke="#38BDF8" stroke-width="1.6"/>
+            <text x="471" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">Express &amp; Socket.io</text>
+            <text x="471" y="93" fill="#38BDF8" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Duplex Push &amp; REST</text>
+
+            <!-- Connector 3 -> 4 -->
+            <line x1="554" y1="80" x2="586" y2="80" stroke="#38BDF8" stroke-width="2" stroke-dasharray="3 3"/>
+            <polygon points="586,80 578,76 578,84" fill="#38BDF8"/>
+
+            <!-- Node 4: Role-Based RBAC & Mongo ODM -->
+            <rect x="586" y="45" width="155" height="70" rx="10" fill="url(#node-bg)" stroke="#34D399" stroke-width="1.6"/>
+            <text x="663" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">8-Tier RBAC &amp; Mongo</text>
+            <text x="663" y="93" fill="#34D399" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Mongoose Scoped ODM</text>
+
+            <!-- Connector 4 -> 5 -->
+            <line x1="741" y1="80" x2="773" y2="80" stroke="#34D399" stroke-width="2"/>
+            <polygon points="773,80 765,76 765,84" fill="#34D399"/>
+
+            <!-- Node 5: CrewAI Autonomous Workforce -->
+            <rect x="773" y="45" width="155" height="70" rx="10" fill="url(#node-bg)" stroke="#F43F5E" stroke-width="1.6"/>
+            <text x="850" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">CrewAI Workforce</text>
+            <text x="850" y="93" fill="#FB7185" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">5 Autonomous Agents</text>
+
+            <!-- Connector 5 -> 6 -->
+            <line x1="928" y1="80" x2="960" y2="80" stroke="#F43F5E" stroke-width="2" stroke-dasharray="3 3"/>
+            <polygon points="960,80 952,76 952,84" fill="#F43F5E"/>
+
+            <!-- Node 6: Automated PDF Dossier -->
+            <rect x="960" y="45" width="130" height="70" rx="10" fill="url(#node-bg)" stroke="#D4AF37" stroke-width="1.6"/>
+            <text x="1025" y="74" fill="#FFFFFF" font-size="11.5" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">PDF Dossier</text>
+            <text x="1025" y="93" fill="#D4AF37" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">jsPDF &amp; Audit Trail</text>
+          </svg>
+        </div>
+
+        <!-- 6-Stage Timeline Journey -->
+        <div class="workflow-timeline">
+          
+          <div class="timeline-card">
+            <div class="timeline-num">1</div>
+            <div class="timeline-content">
+              <h4>Client Onboarding &amp; Dynamic Form Progression</h4>
+              <p>The applicant or channel partner navigates a guided multi-step form powered by EnhancedFormInput and useFormAnimations. Active field spotlights guide input while animated step trackers validate inputs progressively.</p>
+            </div>
+            <span class="timeline-badge">Motion UI Engine</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">2</div>
+            <div class="timeline-content">
+              <h4>Local Document Processing &amp; Optical Verification</h4>
+              <p>Uploaded identity proofs, share certificates, and policy documents enter the DocumentUploadZone. Tesseract.js performs client-side OCR extraction, pre-filling verified folio numbers and company metadata.</p>
+            </div>
+            <span class="timeline-badge">In-Browser OCR</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">3</div>
+            <div class="timeline-content">
+              <h4>Real-Time Ingestion &amp; WebSocket Broadcast</h4>
+              <p>Payloads post to the Node.js/Express API. Upon record persistence, the Socket.io server pushes synchronized notification events to the relevant partner, assigned case employee, and administrative queues.</p>
+            </div>
+            <span class="timeline-badge">Socket.io Event Bus</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">4</div>
+            <div class="timeline-content">
+              <h4>Role-Segregated Operational Routing</h4>
+              <p>Claims, leads, and service tickets are classified into designated operational departments (IEPF Recovery, Pre-IPO Allocation, Wealth Management, or Policy Disputes) with departmental permission gates.</p>
+            </div>
+            <span class="timeline-badge">Mongoose Scopes</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">5</div>
+            <div class="timeline-content">
+              <h4>CrewAI Agent Triage &amp; Validation</h4>
+              <p>The background CrewAI autonomous agent harness queries the database via custom tools (GetClaimSummary, GetMissingDocuments, GetFinancialSummary) to audit filing readiness and flag missing evidentiary documents.</p>
+            </div>
+            <span class="timeline-badge">CrewAI Multi-Agent</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">6</div>
+            <div class="timeline-content">
+              <h4>Exportable Legal Dossiers &amp; Payout Reconciliation</h4>
+              <p>Once verified, the portal compiles a formatted case dossier using jsPDF. Clients and partners receive immutable downloadable PDF summaries, and finance routes log commission and settlement tallies.</p>
+            </div>
+            <span class="timeline-badge">Tamper-Proof jsPDF</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: PRODUCTION SPECIFICATIONS (TECH STACK TABLE) -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">PRODUCTION SPECIFICATIONS</span>
+        </div>
+        <h2 class="section-title">Architectural Tech Stack</h2>
+        <p class="section-intro">
+          Full breakdown of client, real-time, server, intelligence, and infrastructure components deployed in the application.
+        </p>
+
+        <div class="tech-table-wrapper">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Technologies</th>
+                <th>Architectural Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tech-layer-tag">Frontend Web Client</span></td>
+                <td>React 18, Vite 5, Tailwind CSS 3, Lucide Icons</td>
+                <td>High-performance single-page web app with sub-second page loads, glassmorphism UI, and responsive layouts.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Motion &amp; Form System</span></td>
+                <td>Framer Motion 12, Custom FormAnimations CSS</td>
+                <td>Enterprise-grade input spotlighting, smooth progressive reveals, floating labels, and multi-step progress tracking.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Client-Side Document AI</span></td>
+                <td>Tesseract.js, jsPDF, html2canvas</td>
+                <td>Zero-server-overhead document text recognition (OCR) and instant client-side PDF dossier generation.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Data Visualization</span></td>
+                <td>Recharts 3.8</td>
+                <td>Real-time analytics charts displaying claim settlement curves, lead volume, and wealth portfolio balances.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Backend &amp; Real-Time Engine</span></td>
+                <td>Node.js, Express 4.18, Socket.io 4.8</td>
+                <td>High-throughput REST API with full bi-directional WebSocket event channels and graceful socket connection lifecycles.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Database &amp; ODM</span></td>
+                <td>MongoDB, Mongoose 7.0</td>
+                <td>Schematized persistence for multi-role users, claims, IEPF requests, Pre-IPO allocations, and nested document folders.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">AI Agent Workforce</span></td>
+                <td>Python, CrewAI, uv Package Manager</td>
+                <td>Autonomous multi-agent pipeline executing automated claim auditing, missing document tracking, and operational reporting.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Security &amp; Communications</span></td>
+                <td>JWT, BcryptJS, Nodemailer, Node-cron</td>
+                <td>Secure stateless authentication, password hashing, scheduled reconciliation tasks, and automated transactional email dispatch.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA BANNER -->
+    <section class="container">
+      <div class="case-cta-banner">
+        <h2 class="case-cta-title">Explore MyClaim Live or Integrate Enterprise Claim Workflows</h2>
+        <p class="case-cta-desc">
+          Deploy the MyClaim full-stack web portal locally or on cloud container platforms to unify multi-party financial recoveries with enterprise-grade speed, transparency, and auditability.
+        </p>
+        <div class="case-cta-actions">
+          <a href="index.html#contact" class="btn btn-primary">
+            Schedule Enterprise Walkthrough <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-top-brand">
+        <div class="footer-brand-title">
+          <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img" style="width:36px; height:auto; margin-right:8px; vertical-align:middle;">
+          Swamiverse Infotek
+        </div>
+        <p class="footer-tagline">
+          Complex problems. Thoughtfully engineered solutions across software, AI, hardware, and emerging tech.
+        </p>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          &copy; 2026 Swamiverse Infotek. All rights reserved. Built with precision and care.
+        </div>
+        <div class="footer-social-links">
+          <a href="index.html#home" class="footer-social-link">Home</a>
+          <a href="index.html#work" class="footer-social-link">Featured Work</a>
+          <a href="index.html#contact" class="footer-social-link">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="main.js?v=4.0"></script>
+</body>
+</html>

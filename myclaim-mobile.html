@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyClaim Mobile — Cross-Platform Financial Recovery &amp; Channel Partner Suite | Swamiverse Infotek</title>
+  <meta name="description" content="Deep-dive engineering case study for MyClaim Mobile: an enterprise-grade Flutter application engineered for claimants and financial advisors with hardware biometrics, interactive heirship mapping, and dual-role dynamic shell architecture.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Fonts: Inter, Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=4.0">
+
+  <style>
+    /* Custom Case Study Specific Styles */
+    .case-study-hero {
+      padding-top: 8.5rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .case-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-breadcrumb a {
+      color: var(--accent-gold-light);
+      text-decoration: none;
+      transition: color var(--duration-fast) ease;
+    }
+
+    .case-breadcrumb a:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    .case-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+      color: #FFFFFF;
+    }
+
+    .case-lead {
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.65;
+      color: var(--text-celestial-slate);
+      max-width: 890px;
+      margin-bottom: 2.25rem;
+    }
+
+    .case-actions-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .case-stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 860px) {
+      .case-stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .case-stats-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-stat-box {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 14px;
+      padding: 1.5rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 12px 30px rgba(0, 0, 0, 0.5);
+      transition: transform var(--duration-fast) ease, border-color var(--duration-fast) ease;
+    }
+
+    .case-stat-box:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 110, 0.4);
+    }
+
+    .case-stat-val {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 0.35rem;
+      line-height: 1;
+    }
+
+    .case-stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-ice-white);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .case-stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .case-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .case-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 860px) {
+      .case-grid-2col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .case-card-panel {
+      background: var(--glass-surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 2.25rem;
+      backdrop-filter: var(--glass-filter);
+      -webkit-backdrop-filter: var(--glass-filter);
+      box-shadow: var(--glass-bevel), 0 14px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-card-panel.highlight {
+      border-color: rgba(212, 175, 110, 0.45);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(14, 18, 36, 0.85) 100%);
+      box-shadow: var(--glass-bevel), 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 25px rgba(212, 175, 110, 0.18);
+    }
+
+    .panel-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .panel-body {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: var(--text-celestial-slate);
+    }
+
+    .panel-body p {
+      margin-bottom: 1rem;
+    }
+
+    .panel-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .panel-bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .panel-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.94rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.55;
+    }
+
+    .panel-bullet-item .icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .panel-bullet-item.warning .icon {
+      color: #F87171;
+    }
+
+    .panel-bullet-item.success .icon {
+      color: #34D399;
+    }
+
+    /* Innovation Cards Grid */
+    .innovations-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .innovations-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .innovations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .innovation-box {
+      background: rgba(14, 18, 36, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all var(--duration-fast) ease;
+    }
+
+    .innovation-box:hover {
+      border-color: rgba(212, 175, 110, 0.4);
+      background: rgba(20, 26, 54, 0.9);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 110, 0.15);
+    }
+
+    .innovation-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .innovation-icon-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+    }
+
+    .innovation-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .innovation-desc {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.6;
+    }
+
+    /* Workflow Stepper */
+    .workflow-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .timeline-card {
+      background: rgba(14, 18, 36, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1.35rem 1.75rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: all var(--duration-fast) ease;
+    }
+
+    @media (max-width: 680px) {
+      .timeline-card {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(212, 175, 110, 0.35);
+      background: rgba(22, 28, 56, 0.85);
+      transform: translateX(4px);
+    }
+
+    .timeline-num {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      background: rgba(212, 175, 110, 0.15);
+      border: 1px solid rgba(212, 175, 110, 0.4);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content p {
+      font-size: 0.9rem;
+      color: var(--text-celestial-slate);
+      line-height: 1.55;
+    }
+
+    .timeline-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Tech Stack Matrix Table */
+    .tech-table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 11, 24, 0.8);
+    }
+
+    .tech-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .tech-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tech-table td {
+      padding: 1rem 1.25rem;
+      color: var(--text-celestial-slate);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      line-height: 1.55;
+    }
+
+    .tech-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tech-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: #FFFFFF;
+    }
+
+    .tech-layer-tag {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent-gold-light);
+    }
+
+    /* Topology Blueprint Frame */
+    .blueprint-frame {
+      background: rgba(8, 10, 20, 0.95);
+      border: 1px solid rgba(212, 175, 110, 0.3);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Final CTA Card */
+    .case-cta-banner {
+      background: linear-gradient(135deg, rgba(212, 175, 110, 0.15) 0%, rgba(14, 18, 36, 0.95) 100%);
+      border: 1px solid rgba(212, 175, 110, 0.45);
+      border-radius: 18px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+      margin-bottom: 5rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 110, 0.2);
+    }
+
+    .case-cta-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+
+    .case-cta-desc {
+      font-size: 1.1rem;
+      color: var(--text-celestial-slate);
+      max-width: 720px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.6;
+    }
+
+    .case-cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particle Constellation & Stardust Canvas -->
+  <canvas id="bg-constellation-canvas" class="bg-constellation" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Glow Blobs -->
+  <div class="nebula-glow nebula-top-right" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-mid-left" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom-right" aria-hidden="true"></div>
+
+  <!-- Top Reading Progress Indicator -->
+  <div id="scroll-progress-bar" class="scroll-progress" aria-hidden="true"></div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-identity" aria-label="Swamiverse Infotek Home">
+        <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img">
+        <span class="brand-text-stack">
+          <span class="brand-name-main">Swamiverse</span>
+          <span class="brand-name-sub">Infotek</span>
+        </span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#home" class="nav-link">Home</a></li>
+          <li><a href="index.html#work" class="nav-link active">Featured Work</a></li>
+          <li><a href="index.html#services" class="nav-link">Services</a></li>
+          <li><a href="index.html#process" class="nav-link">Process</a></li>
+          <li><a href="index.html#estimator" class="nav-link">Estimator</a></li>
+          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="index.html#contact" class="btn btn-primary" id="header-live-cta">
+          Contact <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul class="mobile-nav-links">
+        <li><a href="index.html#home" class="mobile-nav-link">Home</a></li>
+        <li><a href="index.html#work" class="mobile-nav-link">Featured Work</a></li>
+        <li><a href="index.html#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="index.html#contact" class="mobile-nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO SECTION -->
+    <section class="case-study-hero">
+      <div class="container">
+        
+        <div class="case-breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="index.html#work">Featured Work</a>
+          <span>/</span>
+          <span>MyClaim Mobile Case Study</span>
+        </div>
+
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">ENTERPRISE FINTECH MOBILE SUITE · CROSS-PLATFORM FLUTTER</span>
+        </div>
+
+        <h1 class="case-title">
+          MyClaim Mobile — Cross-Platform Financial Recovery &amp; Channel Partner Suite
+        </h1>
+
+        <p class="case-lead">
+          An enterprise-grade Flutter mobile application engineered for claimants and financial advisors that digitizes IEPF share/dividend recovery, Pre-IPO allocations, and channel partner networks — secured by device-native biometrics, interactive legal heirship mapping, in-app dividend discovery, and sleep-resilient API pipelines — so users track complex financial claims and commissions directly from their mobile devices.
+        </p>
+
+        <div class="case-actions-bar">
+          <a href="index.html#contact" class="btn btn-primary">
+            Contact <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+
+        <!-- ⚡ At-A-Glance System Metrics Strip -->
+        <div class="case-stats-strip">
+          <div class="case-stat-box">
+            <div class="case-stat-val">&lt;500ms</div>
+            <div class="case-stat-label">Biometric Unlock</div>
+            <div class="case-stat-sub">Native fingerprint &amp; Face ID security with PIN fallback</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">Dual-Shell</div>
+            <div class="case-stat-label">Role-Aware Dynamic UI</div>
+            <div class="case-stat-sub">Runtime dashboard switching for Clients vs Channel Partners</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">100%</div>
+            <div class="case-stat-label">Heirship Graph Builder</div>
+            <div class="case-stat-sub">Visual genealogical family tree solving legal inheritance</div>
+          </div>
+          <div class="case-stat-box">
+            <div class="case-stat-val">4s</div>
+            <div class="case-stat-label">Sleep-Resilient Gateway</div>
+            <div class="case-stat-sub">Fast network timeout with instant offline mock fallback</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: EXECUTIVE CONTEXT (THE PROBLEM VS THE SOLUTION) -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">EXECUTIVE CONTEXT</span>
+        </div>
+        <h2 class="section-title">Why Traditional Mobile Claim &amp; Financial Apps Fail</h2>
+        <p class="section-intro">
+          Most mobile banking and insurance apps are built only for simple policy renewals, completely ignoring the complex legal, evidentiary, and multi-generational verification required for dormant asset and IEPF share recovery.
+        </p>
+
+        <div class="case-grid-2col" style="margin-top: 2rem;">
+          
+          <!-- The Problem Panel -->
+          <div class="case-card-panel">
+            <h3 class="panel-title">
+              <span>⚠️</span> The Mobile Asset Recovery Dilemma
+            </h3>
+            <div class="panel-body">
+              <p>
+                In modern financial ecosystems, recovering ancestral shares, uncollected dividends, or contested policy payouts involves physical documentation and succession verification. Traditional mobile apps fail to address these realities:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Physical Paperwork &amp; Lost Folios:</strong> Claimants have to carry physical paper documents, share certificates, and death certificates to offline branch offices with zero mobile visibility.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Missing Heirship &amp; Lineage Tools:</strong> Proving legal heirship for deceased investor shares requires complex family trees that standard mobile banking apps cannot represent.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Disconnected Channel Partners:</strong> Field agents and financial advisors lack mobile CRM tools to manage client leads, track case submissions, and monitor commissions on the go.</div>
+                </li>
+                <li class="panel-bullet-item warning">
+                  <span class="icon">✕</span>
+                  <div><strong>Flaky Network &amp; Server Cold-Starts:</strong> Enterprise cloud endpoints that spin down cause mobile apps to hang indefinitely on white screens, frustrating users in low-connectivity areas.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- The Solution Panel -->
+          <div class="case-card-panel highlight">
+            <h3 class="panel-title">
+              <span>✦</span> The MyClaim Mobile Solution
+            </h3>
+            <div class="panel-body">
+              <p>
+                MyClaim Mobile solves this by replacing manual legwork with a responsive, offline-tolerant, role-adaptive native mobile client:
+              </p>
+              <ul class="panel-bullet-list">
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Dual-Role Dynamic Shells:</strong> Automatically routes authenticated users into either a dedicated Claimant Dashboard or a Partner Sales Suite based on JWT claims.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Interactive Genealogical Family Tree:</strong> Directly map out multi-generational legal heirs on a touch canvas to assemble valid succession claims.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Instant IEPF Share &amp; Dividend Discovery:</strong> Query corporate registrars by company name or folio ID directly from the mobile handset.</div>
+                </li>
+                <li class="panel-bullet-item success">
+                  <span class="icon">✓</span>
+                  <div><strong>Hardware-Level Biometric Protection:</strong> Secures confidential PAN, Aadhaar, and share certificates behind device-native biometric sensors.</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: CORE ENGINEERING INNOVATIONS -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">CORE ENGINEERING INNOVATIONS</span>
+        </div>
+        <h2 class="section-title">What Makes MyClaim Mobile Feel Truly Enterprise-Grade</h2>
+        <p class="section-intro">
+          Six foundational architectural subsystems engineered to elevate MyClaim Mobile beyond generic banking apps into a native financial recovery powerhouse.
+        </p>
+
+        <div class="innovations-grid">
+          
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🔒</div>
+              <h3 class="innovation-title">Device-Native Biometric Security Vault</h3>
+            </div>
+            <p class="innovation-desc">
+              Integrates hardware-level biometrics (local_auth) supporting Face ID, Fingerprint, and OS Passcode fallback. Features delayed auto-triggering for OEM screen transitions (Oppo ColorOS, Samsung OneUI) and kinetic shake animation feedback on failed attempts.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🌳</div>
+              <h3 class="innovation-title">Interactive Heirship &amp; Family Tree Engine</h3>
+            </div>
+            <p class="innovation-desc">
+              A custom mobile genealogical tree manager backed by FamilyTreeProvider. Claimants can visually add nodes for spouses, siblings, and legal heirs on the go, producing structured heirship data critical for government IEPF verification.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">👥</div>
+              <h3 class="innovation-title">Role-Adaptive Dynamic Shell Routing</h3>
+            </div>
+            <p class="innovation-desc">
+              Uses indexed stack state shells (ClientShell and PartnerShell) to hot-swap navigation hierarchies seamlessly. Clients see portfolios and claim trackers, while Partners see leads, client directories, and commission statements.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">⚡</div>
+              <h3 class="innovation-title">Sleep-Resilient &amp; Offline-Tolerant API Client</h3>
+            </div>
+            <p class="innovation-desc">
+              Engineered with a strict 4-second network timeout threshold. If hosted microservices are asleep or unreachable, ApiService gracefully falls back to cached offline state and mock datasets, ensuring zero UI freezing.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">📑</div>
+              <h3 class="innovation-title">Integrated Mobile Document Vault &amp; Picker</h3>
+            </div>
+            <p class="innovation-desc">
+              Leverages native file_picker and image_picker bridges to let users capture physical share certificates, indemnity bonds, and KYC proofs directly via mobile camera or PDF import into a multipart upload pipeline.
+            </p>
+          </div>
+
+          <div class="innovation-box">
+            <div class="innovation-header">
+              <div class="innovation-icon-badge">🔔</div>
+              <h3 class="innovation-title">Native Event &amp; Notification Engine</h3>
+            </div>
+            <p class="innovation-desc">
+              Powered by flutter_local_notifications for system-tray eventing. Users receive real-time push and local alerts whenever case stages advance, documents require re-upload, or partner support tickets are resolved.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: SYSTEM ARCHITECTURE & TOPOLOGY BLUEPRINT -->
+    <section class="case-section" id="blueprint">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">SYSTEM ARCHITECTURE</span>
+        </div>
+        <h2 class="section-title">End-to-End Topology Blueprint</h2>
+        <p class="section-intro">
+          Full data flow tracing biometric verification, role resolution, provider state synchronization, and secure REST communication.
+        </p>
+
+        <!-- Interactive Architecture Flow Diagram -->
+        <div class="blueprint-frame">
+          <svg viewBox="0 0 1000 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+            <defs>
+              <linearGradient id="mb-node-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#141830" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#0E1224" stop-opacity="0.95"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Node 1: App Launch & Particle Splash -->
+            <rect x="20" y="90" width="160" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#8B5CF6" stroke-width="1.6"/>
+            <text x="100" y="117" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">App Launch &amp; Splash</text>
+            <text x="100" y="134" fill="#A78BFA" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">ScreenUtil &amp; Particles</text>
+
+            <!-- Connector 1 -> 2 -->
+            <line x1="180" y1="120" x2="220" y2="120" stroke="#8B5CF6" stroke-width="2"/>
+            <polygon points="220,120 212,116 212,124" fill="#8B5CF6"/>
+
+            <!-- Node 2: Biometric Gate -->
+            <rect x="220" y="90" width="165" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#D4AF37" stroke-width="1.6"/>
+            <text x="302" y="117" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">Biometric Sensor Gate</text>
+            <text x="302" y="134" fill="#FBBF24" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">local_auth Hardware Lock</text>
+
+            <!-- Connector 2 -> 3 -->
+            <line x1="385" y1="120" x2="425" y2="120" stroke="#D4AF37" stroke-width="2"/>
+            <polygon points="425,120 417,116 417,124" fill="#D4AF37"/>
+
+            <!-- Node 3: AuthProvider & JWT Role Check -->
+            <rect x="425" y="90" width="165" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#38BDF8" stroke-width="1.6"/>
+            <text x="507" y="117" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">AuthProvider Role Check</text>
+            <text x="507" y="134" fill="#38BDF8" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">JWT Verification</text>
+
+            <!-- Branch to ClientShell (Up) & PartnerShell (Down) -->
+            <path d="M 590 120 L 620 120 L 620 50 L 640 50" stroke="#38BDF8" stroke-width="1.8" fill="none"/>
+            <polygon points="640,50 632,46 632,54" fill="#38BDF8"/>
+
+            <path d="M 590 120 L 620 120 L 620 190 L 640 190" stroke="#38BDF8" stroke-width="1.8" fill="none"/>
+            <polygon points="640,190 632,186 632,194" fill="#38BDF8"/>
+
+            <!-- Node 4A: ClientShell -->
+            <rect x="640" y="20" width="165" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#10B981" stroke-width="1.6"/>
+            <text x="722" y="47" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">ClientShell</text>
+            <text x="722" y="64" fill="#34D399" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">Claims, Vault &amp; Family Tree</text>
+
+            <!-- Node 4B: PartnerShell -->
+            <rect x="640" y="160" width="165" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#F59E0B" stroke-width="1.6"/>
+            <text x="722" y="187" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">PartnerShell</text>
+            <text x="722" y="204" fill="#FBBF24" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">Leads, CRM &amp; Commissions</text>
+
+            <!-- Convergence to ApiService -->
+            <path d="M 805 50 L 830 50 L 830 120 L 850 120" stroke="#10B981" stroke-width="1.8" fill="none"/>
+            <path d="M 805 190 L 830 190 L 830 120 L 850 120" stroke="#F59E0B" stroke-width="1.8" fill="none"/>
+            <polygon points="850,120 842,116 842,124" fill="#38BDF8"/>
+
+            <!-- Node 5: ApiService & Fallback -->
+            <rect x="850" y="90" width="135" height="60" rx="10" fill="url(#mb-node-bg)" stroke="#EC4899" stroke-width="1.6"/>
+            <text x="917" y="117" fill="#FFFFFF" font-size="11" font-family="'Outfit', sans-serif" text-anchor="middle" font-weight="700">ApiService</text>
+            <text x="917" y="134" fill="#F472B6" font-size="9" font-family="'JetBrains Mono', monospace" text-anchor="middle">4s Sleep-Resilient Gateway</text>
+          </svg>
+        </div>
+
+        <!-- 6-Stage Timeline Journey -->
+        <div class="workflow-timeline">
+          
+          <div class="timeline-card">
+            <div class="timeline-num">1</div>
+            <div class="timeline-content">
+              <h4>App Initialization &amp; Animated Splash Boot</h4>
+              <p>On boot, main.dart initializes ScreenUtilInit (390×844 dp baseline) and NotificationService. SplashScreen executes multi-controller particle, pulse, and ripple animations while verifying versioned onboarding flags.</p>
+            </div>
+            <span class="timeline-badge">Splash Engine</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">2</div>
+            <div class="timeline-content">
+              <h4>Hardware Biometric Authentication &amp; Session Recovery</h4>
+              <p>If an existing session exists in SharedPreferences, BiometricLockScreen engages device-native biometric sensors. Upon biometric confirmation, the user's JWT credentials unlock the app.</p>
+            </div>
+            <span class="timeline-badge">local_auth Gate</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">3</div>
+            <div class="timeline-content">
+              <h4>Role-Based Dynamic Shell Routing</h4>
+              <p>AuthProvider evaluates the stored role. Clients are routed to ClientShell (home, claims, new claim hub, services, documents), while registered channel partners enter PartnerShell (partner metrics, leads, client book, tickets).</p>
+            </div>
+            <span class="timeline-badge">Dual Shell Router</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">4</div>
+            <div class="timeline-content">
+              <h4>Interactive Genealogical Heirship Tree Construction</h4>
+              <p>In the quick action module, users tap into FamilyTreeScreen to map family lineages. Adding members dynamically calculates relationship hierarchies managed reactively by FamilyTreeProvider.</p>
+            </div>
+            <span class="timeline-badge">FamilyTreeProvider</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">5</div>
+            <div class="timeline-content">
+              <h4>Multi-Source Document Capture &amp; Vault Sync</h4>
+              <p>Users upload physical share certificates or KYC records via camera or filesystem. Files are validated for size/type and streamed to /api/documents/upload with local status tracking.</p>
+            </div>
+            <span class="timeline-badge">Multipart Pipeline</span>
+          </div>
+
+          <div class="timeline-card">
+            <div class="timeline-num">6</div>
+            <div class="timeline-content">
+              <h4>Background Push Alerts &amp; Real-Time Case Progression</h4>
+              <p>When claim milestones change or partner tickets are resolved, NotificationService fires local notification channels with status badges, prompting users directly into relevant case views.</p>
+            </div>
+            <span class="timeline-badge">NotificationService</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: PRODUCTION SPECIFICATIONS (TECH STACK TABLE) -->
+    <section class="case-section">
+      <div class="container">
+        
+        <div class="section-label-badge">
+          <span class="label-dot"></span>
+          <span class="label-text">PRODUCTION SPECIFICATIONS</span>
+        </div>
+        <h2 class="section-title">Architectural Tech Stack</h2>
+        <p class="section-intro">
+          Full breakdown of client, audio, backend, intelligence, and infrastructure components deployed in production.
+        </p>
+
+        <div class="tech-table-wrapper">
+          <table class="tech-table">
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Technologies</th>
+                <th>Architectural Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="tech-layer-tag">Client App Core</span></td>
+                <td>Flutter 3.x, Dart SDK ^3.9.2</td>
+                <td>Cross-platform compiled framework targeting Android, iOS, Desktop, and Web from a single codebase.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">State Architecture</span></td>
+                <td>provider: ^6.1.5, ChangeNotifier</td>
+                <td>Reactive state propagation across auth, biometric gates, dashboards, and genealogical family tree structures.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Hardware &amp; Security</span></td>
+                <td>local_auth: ^3.0.1, shared_preferences: ^2.5.5</td>
+                <td>Native biometric sensors (Fingerprint / Face Unlock), passcode fallback, and secure local token storage.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Media &amp; Documents</span></td>
+                <td>file_picker: ^11.0.3, image_picker: ^1.1.2</td>
+                <td>Camera capture of physical share certificates and multi-format PDF document ingestion.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Networking &amp; Resilience</span></td>
+                <td>http: ^1.6.0, Custom Timeout Interceptor</td>
+                <td>Fast REST client with 4-second fail-fast timeout and seamless offline mock fallback.</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">UI Design &amp; Scaling</span></td>
+                <td>flutter_screenutil: ^5.9.3, google_fonts: ^8.1.0</td>
+                <td>Responsive layout scaling across all phone sizes with Poppins typography and emerald dark mode (AppTheme).</td>
+              </tr>
+              <tr>
+                <td><span class="tech-layer-tag">Motion &amp; Notifications</span></td>
+                <td>flutter_animate: ^4.5.2, flutter_local_notifications: ^20.1.0</td>
+                <td>60 FPS physics animations and native system-tray push alerts for real-time claim updates.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA BANNER -->
+    <section class="container">
+      <div class="case-cta-banner">
+        <h2 class="case-cta-title">Explore MyClaim Mobile or Deploy Cross-Platform Solutions</h2>
+        <p class="case-cta-desc">
+          Test the mobile application build directly across Android and iOS test devices, or integrate MyClaim's dual-shell architecture for enterprise financial operations.
+        </p>
+        <div class="case-cta-actions">
+          <a href="index.html#contact" class="btn btn-primary">
+            Schedule Mobile Demo <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html#work" class="btn btn-outline">
+            ← Back to All Solutions
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-top-brand">
+        <div class="footer-brand-title">
+          <img src="logo.png" alt="Swamiverse Infotek Logo" class="brand-logo-img" style="width:36px; height:auto; margin-right:8px; vertical-align:middle;">
+          Swamiverse Infotek
+        </div>
+        <p class="footer-tagline">
+          Complex problems. Thoughtfully engineered solutions across software, AI, hardware, and emerging tech.
+        </p>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copy">
+          &copy; 2026 Swamiverse Infotek. All rights reserved. Built with precision and care.
+        </div>
+        <div class="footer-social-links">
+          <a href="index.html#home" class="footer-social-link">Home</a>
+          <a href="index.html#work" class="footer-social-link">Featured Work</a>
+          <a href="index.html#contact" class="footer-social-link">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="main.js?v=4.0"></script>
+</body>
+</html>
