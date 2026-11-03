@@ -703,6 +703,20 @@
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => toggleMobileMenu(true));
     });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (mobileDrawer.classList.contains('open') && !mobileDrawer.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        toggleMobileMenu(true);
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) {
+        toggleMobileMenu(true);
+      }
+    });
   }
 
 

@@ -26,13 +26,15 @@
   <link rel="apple-touch-icon" href="logo.png">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=10.0">
+  <link rel="stylesheet" href="styles.css?v=11.0">
 
   <style id="custom-header-hero-styling">
     /* 1. "Thoughtfully" in radiant goldenlish color */
     .hero-headline .text-celestial-accent,
     .text-celestial-accent {
       display: inline-block !important;
+      max-width: 100%;
+      word-break: break-word;
       color: #E5B869 !important;
       background: linear-gradient(135deg, #FFF5CC 0%, #F5C065 25%, #E6B24D 50%, #D4AF37 75%, #FBBF24 100%) !important;
       background-size: 200% auto !important;
@@ -148,6 +150,18 @@
       font-weight: 800 !important;
       text-transform: uppercase !important;
       letter-spacing: -0.01em !important;
+    }
+
+    @media (max-width: 640px) {
+      .hero-headline .text-celestial-accent,
+      .text-celestial-accent {
+        display: inline !important;
+      }
+      #nav-cta-btn,
+      .header-actions #nav-cta-btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.88rem !important;
+      }
     }
   </style>
 </head>
